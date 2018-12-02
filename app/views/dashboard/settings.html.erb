@@ -1,0 +1,91 @@
+
+                  <div class="row">
+                      <div class="col-md-12">
+                        <div class="card ">
+                            <div class="card-header ">
+                                <h4 class="card-title">Settings</h4>
+                                <p class="card-category"> </p>
+                            </div>
+                            <div class="card-body">
+                              <ul class="flex-container">
+                              <div class="row">
+
+                                <a href="/users/edit" class="no-decoration">
+                                  <li class="setting-section">
+                                    <div class="setting-awesome-font">
+                                      <i class="fa fa-user" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="setting-text">
+                                      <h5>Account</h5>
+                                      <p>Manage your account login details<p>
+                                    </div>
+                                  </li>
+                                </a>
+                                <% if current_user.stripe_account %>
+                                <%= link_to user_stripe_account_path(@user, @stripe_account) do %>
+                                  <li class="setting-section">
+                                    <div class="setting-awesome-font">
+                                      <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="setting-text">
+                                      <h5>Payout Settings</h5>
+                                      <p>Enable and manage your payout settings and details<p>
+                                    </div>
+                                  </li>
+                                  <% end %>
+                                  <% else current_user.stripe_account? %>
+                                  <%= link_to new_user_stripe_account_path(@user) do %>
+                                    <li class="setting-section">
+                                      <div class="setting-awesome-font">
+                                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                      </div>
+                                      <div class="setting-text">
+                                        <h5>Payout Settings</h5>
+                                        <p>Enable and manage your payout settings and details<p>
+                                      </div>
+                                    </li>
+                                    <% end %>
+                                    <% end %>
+
+                                <a href="/account" class="no-decoration">
+                                  <li class="setting-section">
+                                    <div class="setting-awesome-font">
+                                      <i class="fa fa-money" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="setting-text">
+                                      <h5>Payout History</h5>
+                                      <p>View all past payments to your account<p>
+                                    </div>
+                                  </li>
+                                </a>
+
+
+                            </div>
+                              </div>
+
+                        </div>
+                    </div>
+                  </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div>
+        </div>
+    </div>
+  </div> -->
+
+</body>
+
+<script type="text/javascript">
+        var baseOptions = {
+          maintainAspectRatio: false,
+          animation: false
+          };
+</script>
+
+</html>

@@ -1,0 +1,28 @@
+  <%= form_for([@listing, @order]) do |form| %>
+
+
+
+    <% if @order.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+        <ul>
+        <% order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :video %>
+      <%= form.file_field :video %>
+    </div>
+
+
+  <!-- ADD EDITING -->
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+<% end %>

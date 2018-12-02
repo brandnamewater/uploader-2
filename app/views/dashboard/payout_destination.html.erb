@@ -1,0 +1,46 @@
+
+
+                  <div class="row">
+                      <div class="col-md-8">
+                          <div class="card ">
+                              <div class="card-header ">
+                                 <h4 class="card-title">Monthly Payouts</h4>
+                                 <p class="card-category">Track your performance here.</p>
+                              </div>
+                              <div class="card-body ">
+                                    <table class="table table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>Currency</th>
+                                              <th>Amount</th>
+                                              <th>Deposited</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <% @txns.find do |payout| %>
+                                              <tr>
+                                                  <td><%= as_table_row_payout(payout["currency"]) %></td>
+                                                  <td><%= as_table_row_payout(payout["amount"]) %></td>
+                                                  <td><%= as_table_row_payout(Time.at(payout["available_on"]).strftime('%Y-%m-%d')) %></td>
+
+                                              </tr>
+                                          <% end %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+        var baseOptions = {
+          maintainAspectRatio: false,
+          animation: false
+          };
+</script>
+
+</html>

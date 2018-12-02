@@ -1,0 +1,274 @@
+
+                    <div class="row">
+                      <% if current_user.seller? || current_user.seller? && current_user.buyer? %>
+                      <% if current_user.id == @order.seller_id %>
+                      <div class="col-md-6">
+                          <div class="card">
+                            <div class="card-min-height-50vh">
+
+                              <div class="card-header ">
+                                  <h4 class="card-title">Order Intel</h4>
+                                  <p class="card-category"></p>
+                              </div>
+                              <div class="card-body table-full-width table-responsive">
+                                <div class="padding_5">
+
+                                <p id="notice"><%= notice %></p>
+
+                                <p>
+                                  <strong>Name</strong>(Who it's for)<strong>:</strong>
+                                  <%= @order.name %>
+                                </p>
+
+                                <p>
+                                  <strong>Description:</strong>
+                                  <%= @order.description %>
+                                </p>
+
+                                <p>
+                                  <strong>Status:</strong>
+                                  <% if @order.video.present? || @order.order_status["charged"] %>
+                                  Completed
+
+                                  <% elsif @order.order_status["cancelled"] %>
+                                  Cancelled
+
+                                  <% elsif @order.order_status["created"] %>
+                                  Waiting for Talent
+                                  <% end %>
+                                </p>
+
+
+                                <% if @order.video.present? || @order.order_status["charged"] %>
+                                <p>Already Uploaded!</p>
+
+                                <% elsif @order.order_status["cancelled"] %>
+                                <p>Order cancelled</p>
+
+                                <% elsif @order.order_status["created"] %>
+                                <p>Don't want this Shout Request? Cancel it:</p>
+                                  <%= form_for @order, remote: true do |f| %>
+                                  <%= f.hidden_field :order_status, value: "cancelled" %>
+
+                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal", class: "btn btn-danger" %>
+
+                                  <% end %>
+                                  <% end %>
+
+
+                              </div>
+                            </div>
+                            <hr>
+                            <% if @order.order_status["created"] %>
+                            <div class="card-body table-full-width table-responsive">
+                              <div class="padding_5">
+
+                                <%= form_for([@order, @video_order]) do |form| %>
+                                <%= form.file_field :video %>
+                              <div class="actions">
+                                <%= form.submit "Upload", class: "btn btn-success"  %>
+                              </div>
+
+                              </div>
+                            </div>
+                            <% end %>
+                            <% end %>
+
+                            <% if @order.order_status["charged"] %>
+                            <div class="card-body table-full-width table-responsive">
+                              <div class="padding_5">
+                                <p>Upload the wrong video? Update the video</p>
+                                <%= form_for(@order.video_order)  do |form| %>
+                                <%= form.file_field :video %>
+                              <div class="actions">
+                                <%= form.submit "Upload", class: "btn btn-success"  %>
+                              </div>
+
+
+                              </div>
+                            </div>
+                            <% end %>
+                            <% end %>
+
+
+
+
+
+                              </div>
+                          </div>
+                      </div>
+                      <% end %>
+
+
+                        <div class="col-md-6">
+                            <div class="card">
+                              <div class="card-min-height-50vh">
+
+                                <div class="card-header ">
+                                    <h4 class="card-title">Talent information</h4>
+                                    <p class="card-category"></p>
+                                </div>
+                                <div class="card-body table-full-width table-responsive">
+                                  <div class="padding_5">
+
+                                  <%= form_for([@listing, @order], :url => charge_update_order_path ) do |form| %>
+                                    <% if @order.errors.any? %>
+                                      <div id="error_explanation">
+                                        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+                                        <ul>
+                                        <% order.errors.full_messages.each do |message| %>
+                                          <li><%= message %></li>
+                                        <% end %>
+                                        </ul>
+                                      </div>
+                                    <% end %>
+                                    <%= image_tag @order.listing.image_url(:thumb) %>
+
+
+                                    <p>
+                                      <strong>Talent:</strong>
+                                    <%= @order.listing.name %>
+                                  </p>
+
+
+
+
+                                    <% end %>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <% end %>
+
+                      <% if current_user.buyer? %>
+                      <div class="col-md-8 mx-auto">
+                          <div class="card">
+                            <div class="card-min-height-50vh">
+
+                              <div class="card-header ">
+                                  <h4 class="card-title">Your Shouts Request</h4>
+                                  <p class="card-category">View, edit, or update your Shout!</p>
+                              </div>
+                              <div class="card-body table-full-width table-responsive">
+                                <div class="padding_5">
+
+                                <p id="notice"><%= notice %></p>
+
+                                <p>
+                                  <strong>Name</strong>(Who it's for)<strong>:</strong>
+                                  <%= @order.name %>
+                                </p>
+
+                                <p>
+                                  <strong>Description:</strong>
+                                  <%= @order.description %>
+                                </p>
+
+
+                                <p>
+                                  <strong>Status:</strong>
+                                  <% if @order.video.present? || @order.order_status["charged"] %>
+                                  Completed <br> <br>
+
+                                  <%= link_to "Download it", @order.video_order.video.url, class: "btn btn-primary" %>
+
+                                  <% elsif @order.order_status["cancelled"] %>
+                                  Cancelled
+
+                                  <% elsif @order.order_status["created"] %>
+                                  Waiting for Talent
+                                  <% end %>
+                                </p>
+
+
+                                <% if @order.order_status["created"] %>
+                                <%= link_to "Edit Order", edit_user_order_path(@user, @order), class: "btn btn-primary" %>
+                                  <%= form_for @order, remote: true do |f| %>
+                                  <%= f.hidden_field :order_status, value: "cancelled" %>
+
+                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal", class: "btn btn-danger" %>
+
+                                  <% end %>
+                                  <% end %>
+
+
+                              </div>
+                            </div>
+                              </div>
+                          </div>
+                      </div>
+                      <% end %>
+
+
+
+
+                        <div class="col-md-12">
+
+
+        </div>
+    </div>
+
+</body>
+
+<div id="myModal-3" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <h2>Are you sure?</h2>
+        <p>You can't undo a cancelled order.</p>
+          <%= form_for @order, remote: true do |f| %>
+          <%= f.hidden_field :order_status, value: "cancelled" %>
+          <%= f.button type:'submit', class: "btn btn-danger" %>
+          <% end %>
+
+        <%= link_to "No", "javascript:void(0)",'data-dismiss': "modal" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+    // $(window).on('onclick',function(){
+    //     $('#myModal-3').modal('show');
+    // });
+
+
+</script>
+
+
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Chartist Plugin  -->
+<!--  Notifications Plugin    -->
+
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+        demo.showNotification();
+
+    });
+</script>
+
+<script>
+function refreshPage(){
+    window.location.reload();
+}
+</script>
+
+</html>

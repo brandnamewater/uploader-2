@@ -1,0 +1,120 @@
+<link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' />
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Navbar</a>
+<!--
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+-->
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><%= link_to "Talent", '/talent' %>
+    </li>
+  </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <% if user_signed_in? && current_user.seller? %>
+        <li class="nav-item"><%= link_to "Dashboard", '/dashboard' %>
+      </li>
+      <% elsif user_signed_in? && current_user.buyer? %>
+      <li class="nav-item"><%= link_to "Dashboard", '/purchases' %>
+      </li>
+      <% end %>
+      <% if user_signed_in? %>
+        <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      </li>
+      <% else %>
+        <li class="nav-item active">
+      </li>
+
+        <li class="nav-item">
+
+
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn ripple-effect btn-info btn-lg" id="myBtnSignIn">Sign Up/Login</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="SignInModal" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Sign Up/Login</h4>
+          </div>
+          <div class="modal-body">
+            <h2>Login</h2>
+
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :password %><br />
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+              </div>
+
+              <% if devise_mapping.rememberable? -%>
+                <div class="form-group">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+              <% end -%>
+
+              <div class="actions">
+                <%= f.submit "Log in", class: "btn btn-success" %>
+              </div>
+            <% end %>
+
+            <%= render "devise/shared/links" %>
+           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  <script>
+  $(document).ready(function(){
+      $("#myBtnSignIn").click(function(){
+          $("#SignInModal").modal();
+      });
+  });
+  </script>
+
+        </li>
+
+      <% end %>
+
+<!-- FOR BUYERS -->
+
+
+      <!-- <% if buyer_signed_in? %>
+        <li class="nav-item"><%= link_to "View Purchases", purchases_path %>
+      </li>
+        <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      </li>
+      <% else %>
+        <li class="nav-item active">
+      </li>
+        <li class="nav-item"><%= link_to "Sign-Up", new_buyer_registration_path %>
+      </li>
+        </li>
+      <li class="nav-item"><%= link_to "Sign-In", new_buyer_session_path %>
+      </li>
+      <% end %> -->
+
+
+    </ul>
+  </div>
+</nav>

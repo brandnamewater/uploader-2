@@ -1,0 +1,85 @@
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Orders</h4>
+                <p class="card-category">Total</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+                <%= @orders_count_all %>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Orders</h4>
+                <p class="card-category">Completed</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+                <%= @orders_count_charged %>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Orders</h4>
+                <p class="card-category">Pending</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+                <%= @orders_count_created %>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Orders</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="center">#</th>
+                      <th class="center">Name</th>
+                      <th class="center">Price</th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% @orders.each do |order| %>
+                      <tr>
+                        <td><%= order.id %></td>
+                        <td><%= order.email %></td>
+                        <td><%= order.order_price %></td>
+
+                    </tr>
+                  </tbody>
+                  <% end %>
+                </table>
+                <div class="digg_pagination">
+                <%= will_paginate @orders, :param_name => 'admin_orders_page' %>
+                </div>
+
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

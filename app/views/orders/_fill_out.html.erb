@@ -1,0 +1,68 @@
+<div class="padding_5">
+
+<%= form_for([@listing, @order]) do |form| %>
+
+
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name, "Who's the Order for?" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email, "Email address -- (Who to send Order to)" %>
+    <%= form.text_field :email, class: "form-control"  %>
+  </div>
+
+
+  <div class="form-group">
+    <%= form.label :description, "Describe to Talent what to say -- (Be as detailed as you can!)" %>
+    <%= form.text_area :description, class: "form-control", :rows => 10   %>
+  <!--  <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea> -->
+  </div>
+
+<div class="form-group">
+  <div class="row">
+    <div class="col-md-6">
+      <%= form.label :credit_card_number, "Credit or Debit Card" %>
+      <%= form.text_field :credit_card_number, class: "form-control"  %>
+    </div>
+    <div class="col-md-2">
+      <%= form.label :cvc, "CVC" %>
+      <%= form.text_field :cvc, class: "form-control"  %>
+    </div>
+    <div class="col-md-4">
+      <%= form.label :zip_code, "Zip Code" %>
+      <%= form.text_field :zip_code, class: "form-control"  %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="row">
+    <div class="col-md-3">
+      <%= select_month nil, { use_two_digit_numbers: true }, { :name => nil, :'data-stripe' =>
+      "exp-month", class: "form-control" } %>
+    </div>
+    <div class="col-md-3">
+      <%= select_year nil, { start_year: Date.today.year, end_year: Date.today.year+10 }, { :name => nil, :'data-stripe' =>
+      "exp-year", class: "form-control" } %>
+    </div>
+  </div>
+</div>
+    <div class="form-group">
+      <%= form.submit "Order", class: "btn btn-success"  %>
+    </div>
+<% end %>
+</div>

@@ -1,0 +1,107 @@
+<!-- <div class="listing"> -->
+
+<!-- Load icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+</style>
+</head>
+<body class="body-listing">
+
+<div class="row">
+  <div class="top">
+    <form class="example">
+      <%= form_tag(listings_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Talent" %>
+      <button type="submit"><i class="fa fa-search"></i></button>
+
+    </form>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="left">
+    <h2>Categories</h2>
+      <form class="example">
+        <%= form_tag(listings_path, :method => "get", id: "search-form") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search Talent" %>
+      </form>
+    <% end %>
+      <% @categories.each do |cat| %>
+        <%= link_to cat.name, listings_path(:category => cat), class: "btn btn-primary-2" %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="right">
+    <div class="center">
+    <h1>yoyo Talent</h1>
+  </div>
+
+<div id="container">
+  <div class="row">
+    <% @listings.each do |listing| %>
+      <div class="card deck" style="width:250px">
+
+              <img class="card-img-top" src="" alt="">
+
+                <%= link_to image_tag(listing.image_url(:thumb)), listing %>
+                <div class="card-text"><%= listing.user.name %></div>
+                <!-- <div class="text-over">
+                  <div class="caption">
+                    <p><%= listing.user.name %></p>
+                  </div>
+
+              </div> -->
+            </div>
+    <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <script>
+  function myFunction() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("mySearch");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myMenu");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+  }
+  </script>
+
+
+</body>
+</html>

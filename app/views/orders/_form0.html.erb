@@ -1,0 +1,30 @@
+<%= form_for([@listing, @order]) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <form id="form-element" action="/charges" method="post" id="payment-form">
+    <div class="form-row">
+      <label for="card-element">
+        Credit or debit card
+      </label>
+      <div id="card-element" class="form-control">
+        <!-- a Stripe Element will be inserted here. -->
+      </div>
+
+      <!-- Used to display form errors -->
+      <div id="card-errors" role="alert"></div>
+    </div>
+      <br>
+    <button id="button-element" class="ripple-effect">Submit Payment for <%= number_to_currency (@listing.price) %></button>
+<span class="token"></span>
+  </form>
+<% end %>

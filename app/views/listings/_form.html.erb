@@ -1,0 +1,108 @@
+<head>
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/> -->
+
+</head>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+
+
+<%= form_with(model: listing, local: true) do |form| %>
+
+  <% if listing.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria hidden="true">&times;</button
+
+
+      <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+
+      <ul>
+      <% listing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="col-md-6">
+    </div>
+      <div class="col-md-6">
+          <div class="field">
+            <%= form.label :name %>
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= form.label :description %>
+            <%= form.text_area :description, class: "form-control"  %>
+          </div>
+
+          <div class="field">
+            <%= form.label :price %>
+            <%= form.text_field :price, class: "form-control"  %>
+          </div>
+
+
+
+<%= form.label "How Do Fans Know You Best?"%>
+
+  <div class="space">
+    <!-- <%= form.select :category_ids, options_from_collection_for_select(Category.all, :id, :name), :prompt => "Select a Category", :multiple => true %>
+    <%= form.select :category_ids, options_from_collection_for_select(Category.all, :id, :name), :prompt => "Select a Category", :multiple => true %>
+    <%= form.select :category_ids, options_from_collection_for_select(Category.all, :id, :name), :prompt => "Select a Category", :multiple => true %> -->
+
+
+
+      <div id="accordion" class="panel-group">
+        <div class="panel">
+          <div class="panel-heading">
+          <h4 class="panel-title">
+            <a href="#panelBodyOne" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">Categories</a>
+          </h4>
+   </div>
+   <div id="panelBodyOne" class="panel-collapse collapse in">
+   <div class="panel-body">
+  <div id="checkbox">
+    <%= form.collection_check_boxes(:category_ids, Category.all, :id, :name, :multiple => true) %>
+  </div>
+</div>
+    </div>
+  </div>
+
+    </div>
+
+  <script>
+
+  $('#checkbox input:checkbox').change(function () {
+  var $cs=$('#checkbox input:checkbox:checked');
+  if ($cs.length > 4) {
+    $('#checkbox input:checkbox:not(:checked)').attr("disabled", true);
+  }
+  else{
+    $('#checkbox input:checkbox').attr("disabled", false);
+  }
+});
+
+$('#accordion').each(function(){
+    if ($(this).hasClass('in')) {
+        $(this).collapse('toggle');
+    }
+});
+
+</script>
+
+          <div class="field">
+            <%= form.label :image, "Replace Listing Image" %>
+            <%= form.file_field :image %>
+          </div>
+
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+<% end %>
+</div>
+</div>

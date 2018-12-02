@@ -1,0 +1,48 @@
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Users</h4>
+                <p class="card-category">All Buyers</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="center">#</th>
+                      <th class="center">Name</th>
+                      <th class="center">Approval Status</th>
+                      <th class="center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% @users.each do |user| %>
+                      <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.approved %></td>
+                        <td><%= user.password %></td>
+                        <td>
+                          <% if user.approved == false %>
+                            <p>Deleted/Removed</p>
+                            <% else %>
+                              <%= form_for user, remote: true do |f| %>
+                              <%= f.hidden_field :approved, value: false %>
+                              <%= f.submit "Remove User", data: {confirm: "Are you sure?"}, class: "form-control" %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      </tr>
+                  </tbody>
+                  <% end %>
+                </table>
+
+
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

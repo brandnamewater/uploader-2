@@ -1,0 +1,173 @@
+<!-- <div class="listing"> -->
+
+<!-- Load icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+</style>
+</head>
+<div class="body-listing">
+
+
+
+<div class="row">
+  <div class="top">
+    <form class="example">
+      <!-- <input class="searchTerm"> -->
+      <%= form_tag(listings_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], class: "example-form", placeholder: " Search Talent By Name..." %>
+      <button type="submit search-submit"><i class="fa fa-search"></i></button>
+
+    </form>
+    <% end %>
+  </div>
+</div>
+
+
+
+<div class="btn ripple-effect btn-primary">Button</div>
+
+
+<div class="btn ripple-effect btn-cat-2">Button</div>
+
+<div class="row">
+  <div class="left">
+    <h2>Categories</h2>
+    <div class="categories-">
+
+      <% @categories.each do |cat| %>
+        <%= link_to cat.name, listings_path(:category => cat), class: "btn ripple-effect btn-cat-2" %>
+      <% end %>
+      <div class="btn ripple-effect btn-cat-2">Button</div>
+
+  </div>
+
+</div>
+
+
+  <div class="right">
+    <div class="center">
+    <h1>yoyo Talent</h1>
+  </div>
+
+<div class="product-">
+  <div class="row">
+      <% @listings.each do |listing| %>
+      <div class="image-circle">
+        <div class="listing-page-images">
+            <%= link_to image_tag(listing.image_url(:listing_index_4)), listing, id: "listing_click", data: {id: listing.id, name: listing.name} %>
+          </div>
+            <div class="text-over">
+              <p><%= link_to listing.user.name, listing, id: "listing_click" %></p>
+            </div>
+          </div>
+
+        <% end %>
+    </div>
+
+  <!-- <div class="row">
+      <% @listings.each do |listing| %>
+      <div class="image-circle">
+        <div class="card listing-page-images-2">
+          <%= link_to image_tag(listing.image_url(:thumb)), listing %>
+            <div class="card-img-overlay text-over">
+              <p><%= link_to listing.user.name, listing %></p>
+            </div>
+          </div>
+        </div>
+
+        <% end %>
+      </div>
+    </div> -->
+</div>
+
+
+
+  <script>
+  function myFunction() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("mySearch");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myMenu");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+  }
+
+
+
+$(document).ready(function(){
+    $('.example-form')
+        .focusout(function(){
+            $( this ).removeClass('inputactive');
+        })
+        .click(function(){
+            $( this ).addClass('inputactive');
+        })
+        // .mouseenter(function() {
+        //     $( this ).addClass('mouseover');
+        // })
+        // .mouseleave(function() {
+        //     $( this ).removeClass('mouseover');
+        // });
+});
+
+
+// Ripple-effect animation
+(function($) {
+    $(".ripple-effect").click(function(e){
+        var rippler = $(this);
+
+        // create .ink element if it doesn't exist
+        if(rippler.find(".ink").length == 0) {
+            rippler.append("<span class='ink'></span>");
+        }
+
+        var ink = rippler.find(".ink");
+
+        // prevent quick double clicks
+        ink.removeClass("animate");
+
+        // set .ink diametr
+        if(!ink.height() && !ink.width())
+        {
+            var d = Math.max(rippler.outerWidth(), rippler.outerHeight());
+            ink.css({height: d, width: d});
+        }
+
+        // get click coordinates
+        var x = e.pageX - rippler.offset().left - ink.width()/2;
+        var y = e.pageY - rippler.offset().top - ink.height()/2;
+
+        // set .ink position and add class .animate
+        ink.css({
+          top: y+'px',
+          left:x+'px'
+        }).addClass("animate");
+    })
+})(jQuery);
+
+  </script>
+
+
+
+</div>
+</html>

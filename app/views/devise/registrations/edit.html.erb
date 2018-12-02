@@ -1,0 +1,191 @@
+<!--
+
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autocomplete: "name", class: "form-control" %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger"%></p>
+
+<%= link_to "Back", :back %>
+
+-->
+
+
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="card scroll">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Edit & Update Your Accout Login</h4>
+                                    <p class="card-category"></p>
+                                </div>
+                                <div class="card-body ">
+                                  <div data-spy="scroll" data-offset="0">
+                                    <div class="center">
+
+                                    <h2>Account</h2>
+
+                                  </div>
+
+                                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+                                      <%= devise_error_messages! %>
+
+                                      <div class="form-group">
+                                        <%= f.label :name %><br />
+                                        <%= f.text_field :name, autocomplete: "name", class: "form-control" %>
+                                      </div>
+
+
+                                      <div class="form-group">
+                                        <%= f.label :email %><br />
+                                        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+                                      </div>
+
+                                      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                                        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                                      <% end %>
+
+                                      <div class="form-group">
+                                        <%= f.label :password %> (leave blank if you don't want to change it)<br />
+                                        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+                                        <% if @minimum_password_length %>
+                                          <br />
+                                          <em><%= @minimum_password_length %> characters minimum</em>
+                                        <% end %>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <%= f.label :password_confirmation %><br />
+                                        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <%= f.label :current_password %> (we need your current password to confirm your changes)<br />
+                                        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+                                      </div>
+                                      <br>
+                                      <div class="actions">
+                                        <%= f.submit "Update", class: "btn btn-primary btn-lg" %>
+                                      </div>
+                                    <% end %>
+                                </div>
+
+                            </div>
+                            <!-- <% if current_user.stripe_token.present? %>
+                            <%= link_to 'Edit Payment Settings', new_user_stripe_account_path(@user), data: {
+                              :confirm =>'Are you sure?
+                                Editing any of your current payment settings will override any prevoius setting and you will need to re-enter your bank information.  You should only be doing this if you have changed banks, bank accounts, have a new location or your banking Information has updated.'} %>
+                            <%= link_to 'Edit Payment Settings', "javascript:void(0)", 'data-target': "#myModal-1", 'data-toggle': "modal" %>
+                            <% else %>
+                            <%= link_to 'Add Payment Details', new_user_stripe_account_path(@user) %>
+                            <% end %> -->
+
+                        </div>
+                    </div>
+                  </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+<!-- <% if current_user.stripe_token.present? %> -->
+<!-- <div id="myModal-1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <h2>Are you sure?</h2>
+        <p>Editing any of your current payment settings will override any
+           previous settings and you will need to re-enter your banking data.
+          You should only be doing this if you have changed banks or bank accounts,
+          have a new location or your banking information has updated on the banks end.</p>
+        <%= link_to "Yes", new_user_stripe_account_path(@user) %>/
+        <%= link_to "No", "javascript:void(0)",'data-dismiss': "modal" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(window).on('onclick',function(){
+        $('#myModal-1').modal('show');
+    });
+
+
+</script> -->
+<!-- <% end %> -->
+
+
+<!--  Google Maps Plugin    -->
+
+
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+        demo.showNotification();
+
+    });
+</script>
+
+</html>

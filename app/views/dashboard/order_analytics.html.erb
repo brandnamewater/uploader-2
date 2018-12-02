@@ -1,0 +1,68 @@
+
+  <div class="row">
+      <div class="col-md-6">
+          <div class="card ">
+              <div class="card-header ">
+                  <h4 class="card-title">Referring Site Analytics</h4>
+                      <p class="card-category"></p>
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th class="center">Referring Site</th>
+                                      <th class="center">Count</th>
+                                  </tr>
+                              </thead>
+                              <% @orders_referring.each do |referring_domain, count| %>
+                              <tbody>
+                                  <tr>
+                                    <td class="center"><%= referring_domain %></td>
+                                    <td class="center"><%= count %></td>
+                                  </tr>
+                            <% end %>
+                              </tbody>
+                          </table>
+                  </div>
+            </div>
+      </div>
+      <div class="col-md-6">
+          <div class="card ">
+              <div class="card-header ">
+                  <h4 class="card-title">Location Analytics</h4>
+                      <p class="card-category"></p>
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th class="center">Country</th>
+                                      <th class="center">Count</th>
+                                  </tr>
+                              </thead>
+                              <% @orders_country.each do |country, count| %>
+                              <tbody>
+                                  <tr>
+                                    <td class="center"><%= country %></td>
+                                    <td class="center"><%= count %></td>
+                                  </tr>
+                            <% end %>
+                              </tbody>
+                          </table>
+                  </div>
+            </div>
+      </div>
+ </div>
+
+
+
+  </div>
+
+
+
+</body>
+
+<script type="text/javascript">
+        var baseOptions = {
+          maintainAspectRatio: false,
+          animation: false
+          };
+</script>
+
+</html>

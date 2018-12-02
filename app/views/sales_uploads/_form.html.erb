@@ -1,0 +1,34 @@
+<h1>asdf</h1>
+
+<%= form_for([@order, @sales_upload]) do |form| %>
+
+  <% if sales_upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sales_upload.errors.count, "error") %> prohibited this sales_upload from being saved:</h2>
+
+      <ul>
+      <% sales_upload.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+    <%= video_tag(@order.video_url) if @order.video? %>
+    <%= form.label :video %>
+    <%= form.file_field :video %>
+  </div>
+
+
+
+<!-- ADD EDITING -->
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+  <%= link_to 'Edit', edit_order_sales_upload_path(@order, @order, @sales_upload) %>
+
+<% end %>

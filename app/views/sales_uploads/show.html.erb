@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Video:</strong>
+
+  <%= image_tag(@sales_upload.video_url) %>
+
+</p>
+
+  <%= link_to 'Edit', edit_order_sales_upload_path(@sales_upload) %>
+  <%= link_to 'Back', '/sales' %>

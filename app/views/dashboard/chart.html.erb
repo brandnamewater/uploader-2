@@ -1,0 +1,14 @@
+</thead>
+
+<% @orders_month.each do |month, orders| %>
+<tbody>
+  <tr>
+      <td><%= month.strftime("%B") %></td>
+      <td class="center"><%= orders.count %></td>
+      <td class="center"><%= (orders.sum { |order| order.updated_at.day - order.created_at.day } / orders.count) %> Days</td>
+
+
+    </td>
+  </tr>
+  <% end %>
+</tbody>

@@ -1,0 +1,159 @@
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card scroll">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Payment Information</h4>
+                                    <p class="card-category">This information is needed for payments.</p>
+                                    <% if current_user.stripe_token.present? %>
+                                    <p class="card-category" style="color:green">You already have a connected account for your payouts from Shouts.  Only update your account if your banking information has changed.<p>
+                                      <% end%>
+
+
+                                      <p id="notice"><%= notice %></p>
+
+
+
+
+                                </div>
+                                <div class="card-body ">
+                                  <div data-spy="scroll" data-offset="0">
+                                    <div class="panel panel-default topspace col-md-6">
+                                      <div class="panel-body">
+                                        <div class="row">
+                                          <div class="form-group">
+                                             <h5>Business or Personal Account Information</h5>
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="form-group">
+                                             Account Type: <%= (@stripe_account.account_type).capitalize %>
+                                          </div>
+                                        </div>
+                                          <div class="row">
+                                            <div class="form-group">
+                                              <%= @stripe_account.business_tax_id %>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="form-group">
+                                              First Name: <%= @stripe_account.first_name %> <br>
+                                              Last Name: <%= @stripe_account.last_name %>
+                                            </div>
+                                          </div>
+                                            <div class="row">
+                                              <div class="form-group">
+                                                SSN (last 4): <%= @stripe_account.ssn_last_4 %>
+                                              </div>
+                                            </div>
+                                          <hr>
+                                            <div class="row">
+                                              <div class="form-group">
+                                                DOB: <%= @stripe_account.dob_month %>/<%= @stripe_account.dob_day %>/<%= @stripe_account.dob_year %>
+                                              </div>
+                                            </div>
+                                            <hr>
+                                              <div class="row">
+                                                <div class="form-group">
+                                                  Address <br>
+                                                  Street: <%= @stripe_account.address_line1 %> <br>
+                                                  City: <%= @stripe_account.address_city %> <br>
+                                                  State: <%= @stripe_account.address_state %> <br>
+                                                  Postal: <%= @stripe_account.address_postal %> <br>
+                                                </div>
+                                              </div>
+                                              <hr>
+                                              <%= link_to 'Edit', edit_user_stripe_account_path %>
+                                            <hr>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+
+                                      <div class="panel panel-default topspace col-md-6">
+                                        <div class="panel-body">
+                                          <div class="row">
+                                            <div class="form-group">
+                                               <h5>Banking & Routing Information</h5>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="form-group">
+                                              <% @stripe_account_bank.external_accounts.each do |balance| %>
+                                                      Routing Number: <%= as_table_row_bank(balance["routing_number"]) %> <br>
+                                                      Currency: <%= as_table_row_bank(balance["currency"]) %>
+                                              <% end %>
+                                                  </div>
+                                                </div>
+                                                <hr>
+                                                <%= link_to 'Edit', new_stripe_account_bank_account_path(@stripe_account) %>
+                                              <hr>
+                                          </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            </div>
+                            <div class="row">
+                              <i class="fa fa-info" aria-hidden="true"></i><h6>Any sensitive information, such as banking information, is not saved within our database</h6>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+
+
+<script>
+
+var stripe = Stripe('pk_test_WUSowiZS0TqTSqQJucPWU8kh');
+
+  $(function(){
+    $('#stripe_account_account_type').change(function(){
+      if($('#stripe_account_account_type').val() == 'company'){
+          $('.business-row').removeClass('hidden');
+        } else {
+          $('.business-row').addClass('hidden');
+        }
+    });
+  });
+</script>
+
+<!--  Google Maps Plugin    -->
+<!--  Chartist Plugin  -->
+<!--  Notifications Plugin    -->
+
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+        demo.showNotification();
+
+    });
+</script>
+
+</html>

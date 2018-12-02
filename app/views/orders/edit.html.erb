@@ -1,0 +1,265 @@
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                          <div class="card">
+                            <div class="card-min-height-50vh">
+
+                              <div class="card-header ">
+                                  <h4 class="card-title">Order Intel</h4>
+                                  <p class="card-category"></p>
+                              </div>
+                              <div class="card-body table-full-width table-responsive">
+                                <div class="padding_5">
+
+                                <p id="notice"><%= notice %></p>
+
+                                <p>
+                                  <strong>Name:</strong>
+                                  <%= @order.name %>
+                                </p>
+
+                                <p>
+                                  <strong>Description:</strong>
+                                  <%= @order.description %>
+                                </p>
+
+                                <% if @order.order_status == 2 %>
+                                <p>Already Uploaded!</p>
+
+                                <% elsif @order.order_status == 3 %>
+                                <p>Order cancelled</p>
+
+                                <% elsif @order.order_status == "created" || 1 %>
+                                Don't like this request? You can cancel it:
+                                  <%= form_for @order, remote: true do |f| %>
+                                  <%= f.hidden_field :order_status, value: "cancelled" %>
+                                  <i class="fa fa-times" aria-hidden="true"></i>
+
+                                  <%= link_to 'X', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal" %>
+                                  <% end %>
+
+
+
+
+
+
+
+
+
+  <div class="accordion" id="accordionExample">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Edit your request
+        </button>
+      </h5>
+    </div>
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <h6>Your Shout may already be in progress! We cannot guarantee your updates will be seen in time!</h6>
+          <br>
+          <%= form_for(@order) do |form| %>
+            <div class="form-group">
+              <%= form.label :email, "Your Email Address -- (You can send the Shout to a new email once uploaded!)" %>
+              <%= form.text_field :email, class: "form-control", required: true   %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :description, "Describe to Talent what to say -- (Be as detailed as you can!)" %>
+              <%= form.text_area :description, class: "form-control", :rows => 10, required: true    %>
+            </div>
+
+            <div class="form-group">
+              <%= form.submit "Update", class: "btn btn-primary btn-lg btn-block btn-custom" %>
+            </div>
+            <% end %>
+
+
+            <%= form_for @order, remote: true do |f| %>
+              <%= f.hidden_field :order_status, value: "cancelled" %>
+              <%= f.button "Cancel Order", type:'submit', data: {confirm: "Are you sure you want to cancel this order? You cannot undo this"}, class: "btn btn-link" do %>
+              <p>Cancel</p>
+            <% end %>
+            <% end %>
+
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+
+                              </div>
+                            </div>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <% if current_user.seller? %>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                              <div class="card-min-height-50vh">
+
+                                <div class="card-header ">
+                                    <h4 class="card-title">Upload Your Order!</h4>
+                                    <p class="card-category">Upload your Order here</p>
+                                </div>
+                                <div class="card-body table-full-width table-responsive">
+                                  <div class="padding_5">
+
+                                  <%= form_for([@listing, @order], :url => charge_update_order_path ) do |form| %>
+
+
+                                    <% if @order.errors.any? %>
+                                      <div id="error_explanation">
+                                        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+                                        <ul>
+                                        <% order.errors.full_messages.each do |message| %>
+                                          <li><%= message %></li>
+                                        <% end %>
+                                        </ul>
+                                      </div>
+                                    <% end %>
+
+                                    <% if @order.video.present? && @order.order_status["charged"] %>
+                                    <p>Already Uploaded & Complete!</p>
+
+                                    <% elsif @order.order_status["cancelled"] %>
+                                    <p>Order Cancelled or Expired</p>
+
+                                    <% elsif @order.order_status["created"] %>
+                                    <div class="field">
+                                      <%= form.file_field :video %>
+                                    </div>
+                                    <div class="actions">
+                                      <%= form.submit "Upload", class: "btn btn-success"  %>
+                                    </div>
+                                    <% end %>
+                                    <% end %>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <% end %>
+
+
+
+
+                      <% if current_user.buyer? %>
+                      <div class="col-md-8 mx-auto">
+                          <div class="card">
+                            <div class="card-min-height-50vh">
+
+                              <div class="card-header ">
+                                  <h4 class="card-title">Your Shouts Request</h4>
+                                  <p class="card-category">View, edit, or update your Shout!</p>
+                              </div>
+                              <div class="card-body table-full-width table-responsive">
+                                <div class="padding_5">
+
+                                <p id="notice"><%= notice %></p>
+
+                                <p>
+                                  <strong>Name</strong>(Who it's for)<strong>:</strong>
+                                  <%= @order.name %>
+                                </p>
+
+                                <p>
+                                  <strong>Description:</strong>
+                                  <%= @order.description %>
+                                </p>
+
+
+                                <% if @order.video.present? && @order.order_status == 2 %>
+                                <p>Already Uploaded!</p>
+
+                                <% elsif @order.order_status == 3 %>
+                                <p>Order cancelled</p>
+
+                                <% elsif @order.order_status == "created" || 1 %>
+                                  <%= form_for @order, remote: true do |f| %>
+                                  <%= f.hidden_field :order_status, value: "cancelled" %>
+
+                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal" %>
+
+                                  <% end %>
+                                  <% end %>
+
+
+                              </div>
+                            </div>
+                              </div>
+                          </div>
+                      </div>
+                      <% end %>
+
+
+
+
+
+
+
+                        <div class="col-md-12">
+
+
+        </div>
+    </div>
+
+</body>
+
+
+
+<div id="myModal-3" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <h2>Are you sure?</h2>
+        <p>You can't undo a cancelled order.</p>
+          <%= form_for @order, remote: true do |f| %>
+          <%= f.hidden_field :order_status, value: "cancelled" %>
+          <%= f.button type:'submit', class: "btn btn-danger" %>
+          <% end %>
+
+        <%= link_to "No", "javascript:void(0)",'data-dismiss': "modal" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+        demo.showNotification();
+
+    });
+</script>
+
+<script>
+
+
+$('.collapse').collapse()
+
+</script>
+
+</html>

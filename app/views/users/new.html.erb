@@ -1,0 +1,52 @@
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-min-height-50vh">
+
+            <div class="card-header ">
+                <h4 class="card-title">Users</h4>
+                <p class="card-category">All Users</p>
+            </div>
+
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+
+                <h2>Create User</h2>
+
+                <%= form_for User.new , :url => {:action => "add_user"} do |f| %>
+
+                  <div class="form-group">
+                    <%= f.label :name %><br />
+                    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :email %><br />
+                    <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :password %>
+                    <% if @minimum_password_length %>
+                    <em>(<%= @minimum_password_length %> characters minimum)</em>
+                    <% end %><br />
+                    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :password_confirmation %><br />
+                    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+                  </div>
+
+                  <div class="actions">
+                    <%= f.submit "Sign up", class: "btn btn-success" %>
+                  </div>
+                <% end %>
+
+
+              </div>
+            </div>
+
+        </div>
+    </div>
+</div>

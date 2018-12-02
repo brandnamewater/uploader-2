@@ -1,0 +1,289 @@
+<p id="notice"><%= notice %></p>
+
+<% ahoy.track "Listing Viewed", listing_id: @listing.id %>
+
+<head>
+
+
+
+</head>
+
+
+<div class="jumbotron jumbotron-2">
+  <div class="row">
+    <div class="image-circle-show">
+      <div class="listing-show-images">
+        <%= image_tag @listing.image_url(:thumb) %>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="center">
+      <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col-xs-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-stepnum">Step 1<i class="fa fa-mobile fa-1x" aria-hidden="true"></i></div>
+          <div class="progress"><div class="progress-bar"></div></div>
+            <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="left"
+              title="Your purchase is put on hold and you're not charged until the ORDER is complete."></a>
+          <div class="bs-wizard-info text-center">Request Your !</div>
+            <a class="bs-wizard-dot-2" data-toggle="tooltip" data-placement="top"
+              title="During this time you can edit or cancel your Order."></a>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-stepnum">Step 2</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="top"
+            title="Once uploaded, you can then Get Your Order!"></a>
+          <div class="bs-wizard-info text-center">Talent uploads!</div>
+        </div>
+
+        <div class="col-xs-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-stepnum">Step 3</div>
+          <div class="progress"><div class="progress-bar"></div></div>
+          <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="right"
+            title="Get Your yoyo from either your dashboard, by email, or by text."></a>
+          <div class="bs-wizard-info text-center">GET YOUR PRODUCT!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-listing">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' />
+
+
+
+      <div class="row">
+        <div class="margin-auto">
+        <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="center-4">
+                          <h2>
+                            <%= @listing.name %>
+                          </h2>
+                          <h5>
+                            <%= @listing.description %>
+                          </h5>
+                          <p>
+                            Usually responds in
+                            <%= (@listing.orders.where(order_status: [2] ).sum { |orders| orders.updated_at.day - orders.created_at.day } / @orders.where(order_status: [2] ).count )  %>
+                              Days
+                          </p>
+                      </div>
+                <hr>
+                  <div class="center-4">
+                  <h2>Create your Shout!</h2>
+                </div>
+                </div>
+                <div class="card-body">
+
+                  <%= form_for(@order, url: listing_orders_path(@listing)) do |form| %>
+
+                    <% if @order.errors.any? %>
+                      <div id="error_explanation">
+                        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+                        <ul>
+                        <% order.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+
+                    <div class="form-group">
+                      <%= form.label :name, "Who's the Shout for?" %>
+                      <%= form.text_field :name, class: "form-control", required: true %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :email, "Your Email Address -- (You can send the Shout to a new email once uploaded!)" %>
+                      <%= form.text_field :email, class: "form-control", required: true   %>
+                    </div>
+
+                    <div class="form-group">
+                      <%= form.label :description, "Describe to Talent what to say -- (Be as detailed as you can!)" %>
+                      <%= form.text_area :description, class: "form-control", :rows => 10, required: true    %>
+                    </div>
+
+                    <script
+
+                      src="https://js.stripe.com/v3/">
+
+                    </script>
+
+                      <div class="form-row">
+                        <label for="card-element">
+                          Credit or debit card
+                        </label>
+                        <div id="card-element" class="form-control">
+                        </div>
+
+                        <div id="card-errors" role="alert"></div>
+                      </div>
+                        <br>
+                        <div class="form-group">
+
+                          <!-- <%= form.hidden_field :stripe_customer_token %> -->
+
+                      <%= form.submit "Create Shout for #{number_to_currency(@listing.price)}", class:"ripple-effect", id:"button-element" %>
+
+                    </div>
+
+                    <span class="token"></span>
+                    <!-- </form> -->
+                    <% end %>
+
+                    </div>
+
+
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+      <script>
+
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+
+      $(document).ready(function(){
+          $("#myBtnOrderClick").click(function(){
+              $("#OrderModal").modal();
+          });
+      });
+
+
+
+
+
+
+      (function($) {
+          $(".ripple-effect").click(function(e){
+              var rippler = $(this);
+
+              // create .ink element if it doesn't exist
+              if(rippler.find(".ink").length == 0) {
+                  rippler.append("<span class='ink'></span>");
+              }
+
+              var ink = rippler.find(".ink");
+
+              // prevent quick double clicks
+              ink.removeClass("animate");
+
+              // set .ink diametr
+              if(!ink.height() && !ink.width())
+              {
+                  var d = Math.max(rippler.outerWidth(), rippler.outerHeight());
+                  ink.css({height: d, width: d});
+              }
+
+              // get click coordinates
+              var x = e.pageX - rippler.offset().left - ink.width()/2;
+              var y = e.pageY - rippler.offset().top - ink.height()/2;
+
+              // set .ink position and add class .animate
+              ink.css({
+                top: y+'px',
+                left:x+'px'
+              }).addClass("animate");
+          })
+      })(jQuery);
+
+      </script>
+
+    </div>
+
+
+
+  <script>
+
+
+
+
+
+  // Create a Stripe client.
+  var stripe = Stripe('pk_test_WUSowiZS0TqTSqQJucPWU8kh');
+
+  // Create an instance of Elements
+  var elements = stripe.elements();
+
+  // Custom styling can be passed to options when creating an Element.
+  // (Note that this demo uses a wider set of styles than the guide below.)
+  var style = {
+    base: {
+      color: '#32325d',
+      lineHeight: '24px',
+      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+      fontSmoothing: 'antialiased',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aab7c4'
+      }
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a'
+    }
+  };
+
+  // Create an instance of the card Element
+  var card = elements.create('card', {style: style});
+
+  // Add an instance of the card Element into the `card-element` <div>
+  card.mount('#card-element');
+
+  // Handle real-time validation errors from the card Element.
+  card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+
+  // Handle form submission
+  var form = document.getElementById('payment_form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    stripe.createToken(card).then(function(result) {
+      if (result.error) {
+        // Inform the user if there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+      } else {
+        // Send the token to your server
+        stripeTokenHandler(result.token);
+      }
+    });
+  });
+
+    function stripeTokenHandler(token) {
+      // Insert the token ID into the form so it gets submitted to the server
+      var form = document.getElementById('payment_form');
+      var hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', 'stripeToken');
+      hiddenInput.setAttribute('value', token.id);
+      form.appendChild(hiddenInput);
+
+      // Submit the form
+      form.submit();
+    }
+
+
+
+</script>
+
+<!-- <%= link_to "Get your order for", new_listing_order_path(@listing), class: 'btn btn-primary' %> -->

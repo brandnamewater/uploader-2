@@ -1,0 +1,11 @@
+
+ $('#myModal').on('shown.bs.modal', function () {
+   $('#myInput').trigger('focus')
+ })
+ $(".a-unique-class").html('<%= j render link_to edit_order_path(order) %> ')
+
+
+
+ $("#myModal").find(".modal-content").html("<%= j (link_to edit_order_path(order)) %>");
+
+ $("#myModal").modal(link_to edit_order_path(order));

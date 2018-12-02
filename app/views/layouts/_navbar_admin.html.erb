@@ -1,0 +1,90 @@
+<link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' />
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+
+    <ul class="nav navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to "Talent", '/' %>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <% if current_user.seller? %>
+        <li class="nav-item"><%= link_to "Dashboard", '/dashboard' %>
+      </li>
+      <% elsif current_user.buyer? %>
+      <li class="nav-item"><%= link_to "Dashboard", '/purchases' %>
+    </li>
+    <% end %>
+    <% if user_signed_in? %>
+      <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+    </li>
+    <% else %>
+        <li class="nav-item">
+
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn ripple-effect btn-info btn-lg" id="myBtnSignIn">Sign Up/Login</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="SignInModal" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Sign Up/Login</h4>
+          </div>
+          <div class="modal-body">
+            <h2>Login</h2>
+
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :password %><br />
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+              </div>
+
+              <% if devise_mapping.rememberable? -%>
+                <div class="form-group">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+              <% end -%>
+
+              <div class="actions">
+                <%= f.submit "Log in", class: "btn btn-success" %>
+              </div>
+            <% end %>
+
+            <%= render "devise/shared/links" %>
+           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <% end %>
+
+  <script>
+  $(document).ready(function(){
+      $("#myBtnSignIn").click(function(){
+          $("#SignInModal").modal();
+      });
+  });
+  </script>
+
+        </li>
+
+
+
+    </ul>
+
+<!-- </nav> -->

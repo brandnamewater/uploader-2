@@ -1,0 +1,59 @@
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Users</h4>
+                <p class="card-category">All Sellers</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="center">#</th>
+                      <th class="center">Name</th>
+                      <th class="center">Approval Status</th>
+                      <th class="center">Seller</th>
+                      <th class="center">Admin</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% @users.each do |user| %>
+                      <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.approved %></td>
+                        <td>
+                          <% if user.approved == true %>
+                            <p>Approved</p>
+                            <% else %>
+                              <%= form_for user, remote: true do |f| %>
+                              <%= f.hidden_field :approved, value: true %>
+                              <%= f.submit "Approve User", data: {confirm: "Are you sure?"}, class: "form-control" %>
+                            <% end %>
+                          <% end %>
+                      </td>
+                        <td>
+                          <% if user.seller == true %>
+                            <p>Approved</p>
+                            <% else %>
+                              <%= form_for user, remote: true do |f| %>
+                              <%= f.hidden_field :seller, value: true %>
+                              <%= f.submit "Approve User", data: {confirm: "Are you sure?"}, class: "form-control" %>
+                            <% end %>
+                          <% end %>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <% end %>
+                </table>
+
+
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
