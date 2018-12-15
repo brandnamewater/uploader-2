@@ -40,31 +40,51 @@ class VideoOrdersController < ApplicationController
 
       if @video_order.valid?
         begin
+          @amount = ((@order.order_price).to_i * 100)
+          @amount_seller = ((@order.order_price).to_i * (@order.seller.commission * 100).to_i)
+
           charge = Stripe::Charge.create({
-            :amount      => (@order.order_price).to_i * 100,
+            :amount      => @amount,
             :description => 'Rails Stripe customer',
             :currency    => 'usd',
             :customer => @order.stripe_customer_token,
+            :transfer_group => @order.id,
             :destination => {
               :amount => @amount_seller ,
               :account => (@order.seller.stripe_account.acct_id),
             }
           })
-        rescue Stripe::CardError => e
-          charge_error = e.message
-        end
-        if charge_error
-          flash[:error] = charge_error
-          redirect_to '/'
-        else
+            rescue Stripe::CardError => e
+              charge_error = e.message
+            end
+            if charge_error
+              flash[:error] = charge_error
+              redirect_to '/'
+            else
 
-          if @video_order.save
-            @order.update_column(:order_status, 2)
-            format.html { redirect_to @order, notice: 'Video was successfully uploaded!' }
-            format.json { render :show, status: :created, location: @video_order }
-          else
-            format.html { render :new }
-            format.json { render json: @video_order.errors, status: :unprocessable_entity }
+            if @order.seller.affiliate_id.present?
+              begin
+                @amount_affiliate = ((@order.order_price).to_i * (@order.seller.affiliate.commission * 100).to_i)
+                Stripe::Transfer.create(
+                  :amount => @amount_affiliate,
+                  :currency => 'usd',
+                  :destination => @order.seller.affiliate.stripe_account.acct_id,
+                  :transfer_group => @order.id,
+                )
+              else
+
+              if @video_order.save
+                @order.update_column(:order_status, 2)
+                format.html { redirect_to @order, notice: 'Video was successfully uploaded!' }
+                format.json { render :show, status: :created, location: @video_order }
+                OrderMailer.order_email_charged_buyer(@user, @order).deliver
+                OrderMailer.order_email_charged_seller(@user, @order).deliver
+
+              else
+                format.html { render :new }
+                format.json { render json: @video_order.errors, status: :unprocessable_entity }
+              end
+            end
           end
         end
       end

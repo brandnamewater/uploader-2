@@ -1,0 +1,32 @@
+<%= form_with(model: affiliate_dashboard, local: true) do |form| %>
+  <% if affiliate_dashboard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(affiliate_dashboard.errors.count, "error") %> prohibited this affiliate_dashboard from being saved:</h2>
+
+      <ul>
+      <% affiliate_dashboard.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :clients %>
+    <%= form.text_field :clients %>
+  </div>
+
+  <div class="field">
+    <%= form.label :analytics %>
+    <%= form.text_field :analytics %>
+  </div>
+
+  <div class="field">
+    <%= form.label :orders %>
+    <%= form.text_field :orders %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -22,7 +22,6 @@ body {
 
 
 
-<div class="row">
   <div class="top">
     <form class="example">
       <!-- <input class="searchTerm"> -->
@@ -33,7 +32,6 @@ body {
     </form>
     <% end %>
   </div>
-</div>
 
 
 
@@ -45,25 +43,25 @@ body {
 <div class="row">
   <div class="left">
     <h2>Categories</h2>
-    <div class="categories-">
+        <div class="categories-">
 
-      <% @categories.each do |cat| %>
-        <%= link_to cat.name, listings_path(:category => cat), class: "btn ripple-effect btn-cat-2" %>
-      <% end %>
-      <div class="btn ripple-effect btn-cat-2">Button</div>
+          <% @categories.each do |cat| %>
+            <%= link_to cat.name, listings_path(:category => cat), class: "btn ripple-effect btn-cat-2" %>
+          <% end %>
+          <div class="btn ripple-effect btn-cat-2">Button</div>
 
-  </div>
+    </div>
 
 </div>
 
 
   <div class="right">
     <div class="center">
-    <h1>yoyo Talent</h1>
-  </div>
+      <h1>Talent</h1>
+    </div>
 
 <div class="product-">
-  <div class="row">
+  <!-- <div class="row"> -->
       <% @listings.each do |listing| %>
       <div class="image-circle">
         <div class="listing-page-images">
@@ -75,7 +73,7 @@ body {
           </div>
 
         <% end %>
-    </div>
+    <!-- </div> -->
 
   <!-- <div class="row">
       <% @listings.each do |listing| %>
@@ -90,7 +88,7 @@ body {
 
         <% end %>
       </div>
-    </div> -->
+    </div>  -->
 </div>
 
 

@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <% ahoy.track "Listing Viewed", listing_id: @listing.id %>
 
@@ -19,31 +18,32 @@
   </div>
   <br>
   <div class="center">
-      <div class="row bs-wizard" style="border-bottom:0;">
-        <div class="col-xs-4 bs-wizard-step complete">
-          <div class="text-center bs-wizard-stepnum">Step 1<i class="fa fa-mobile fa-1x" aria-hidden="true"></i></div>
-          <div class="progress"><div class="progress-bar"></div></div>
-            <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="left"
-              title="Your purchase is put on hold and you're not charged until the ORDER is complete."></a>
-          <div class="bs-wizard-info text-center">Request Your !</div>
-            <a class="bs-wizard-dot-2" data-toggle="tooltip" data-placement="top"
-              title="During this time you can edit or cancel your Order."></a>
+    <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col-4 bs-wizard-step complete">
+            <div class="text-center bs-wizard-stepnum">Step 1<i class="fa fa-mobile fa-1x" aria-hidden="true"></i>
+            </div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="left" title="Your purchase is put on hold and you&apos;re not charged until the ORDER is complete."></a>
+            <div
+            class="bs-wizard-info text-center">Request Your !</div> <a class="bs-wizard-dot-2" data-toggle="tooltip" data-placement="top"
+            title="During this time you can edit or cancel your Order."></a>
+            </div>
+      <div class="col-4 bs-wizard-step complete">
+        <div class="text-center bs-wizard-stepnum">Step 2</div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="top" title="Once uploaded, you can then Get Your Order!"></a>
+        <div class="bs-wizard-info text-center">Talent uploads!</div>
         </div>
-
-        <div class="col-xs-4 bs-wizard-step complete">
-          <div class="text-center bs-wizard-stepnum">Step 2</div>
-          <div class="progress"><div class="progress-bar"></div></div>
-          <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="top"
-            title="Once uploaded, you can then Get Your Order!"></a>
-          <div class="bs-wizard-info text-center">Talent uploads!</div>
-        </div>
-
-        <div class="col-xs-4 bs-wizard-step complete">
-          <div class="text-center bs-wizard-stepnum">Step 3</div>
-          <div class="progress"><div class="progress-bar"></div></div>
-          <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="right"
-            title="Get Your yoyo from either your dashboard, by email, or by text."></a>
-          <div class="bs-wizard-info text-center">GET YOUR PRODUCT!</div>
+      <div class="col-4 bs-wizard-step complete">
+        <div class="text-center bs-wizard-stepnum">Step 3</div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="right"
+        title="Get Your yoyo from either your dashboard, by email, or by text."></a>
+        <div
+        class="bs-wizard-info text-center">GET YOUR PRODUCT!</div>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' />
+    <!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' /> -->
 
 
 
@@ -71,9 +71,12 @@
                             <%= @listing.description %>
                           </h5>
                           <p>
+                            <% if @listing.orders.where(order_status: [2] ).present? %>
                             Usually responds in
-                            <%= (@listing.orders.where(order_status: [2] ).sum { |orders| orders.updated_at.day - orders.created_at.day } / @orders.where(order_status: [2] ).count )  %>
+                            <%= (@listing.orders.where(order_status: [2] ).sum { |orders| orders.updated_at.day - orders.created_at.day } / @listing.orders.where(order_status: [2] ).count )  %>
                               Days
+                              <% end %>
+
                           </p>
                       </div>
                 <hr>

@@ -1,0 +1,78 @@
+
+                  <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card border-success ">
+                            <div class="card-header ">
+                              Total Shouts
+                            </div>
+                            <div class="card-body text-success">
+                              <%= @orders_e.count %>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                          <div class="card border-primary ">
+                              <div class="card-header ">
+                                  Account Level
+                              </div>
+                              <div class="card-body text-primary ">
+                                  Follower (Create your first shout to level up!)
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-4">
+                          <div class="card ">
+                              <div class="card-header ">
+                                  Your most recent Shout Request
+                              </div>
+                              <div class="card-body ">
+                                <% if @orders_g.present? %>
+                                  <%= @orders_g.first.name %>
+                                  <br>
+                                  <%= @orders_g.first.order_status %>
+                                <% else %>
+                                Request your first Shouts!
+                                <% end %>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6 mt-5">
+                          <div class="card ">
+                              <div class="card-header ">
+                                  <h4 class="card-title">Your Shouts requests per month!</h4>
+                                  <p class="card-category"></p>
+                              </div>
+                              <div class="card-body ">
+                                <%= line_chart @orders_e.group_by_month(:created_at).count %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mt-5">
+                        <div class="card ">
+                            <div class="card-header ">
+                                <h4 class="card-title">Payouts</h4>
+                                <p class="card-category">Your past payouts</p>
+                            </div>
+                            <div class="card-body ">
+
+                            </div>
+                            <div class="card-footer ">
+                                <hr>
+                                <div class="stats">
+                                    <p><i class="fa fa-check"></i>View Payout Schedule</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+</script>
+
+</html>

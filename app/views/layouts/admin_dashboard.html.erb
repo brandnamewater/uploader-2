@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-
-    </div class="container">
       <% flash.each do |name, msg| %>
         <% if msg.is_a?(String) %>
           <div class="alert alert-<%= name == :notice ? "success" : "danger" %> alert-dismissable">
@@ -50,21 +48,25 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="sidebar" data-image=" ">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+  <body id="admin">
+    <nav class="navbar navbar-expand navbar-dark bg-primary"> <a href="#menu-toggle" id="menu-toggle" class="navbar-brand"><span class="navbar-toggler-icon"></span></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"> <a class="nav-link" href="/">Navbar <span class="sr-only">(current)</span></a> </li>
+            </ul>
+            <form class="form-inline my-2 my-md-0"> </form>
+        </div>
+    </nav>
+      <div id="wrapper" class="toggled">
 
-        Tip 2: you can also add an image using data-image tag
-    -->
-            <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="/" class="simple-text">
-                      SHOUTStv
+              <div id="sidebar-wrapper">
+                  <!-- <div class="logo">
+                      <a href="/" class="simple-text">
+                        SHOUTStv
 
-                    </a>
-                </div>
-                <ul class="nav">
+                      </a>
+                  </div> -->
+                  <ul class="sidebar-nav">
                   <% if current_user.seller? || current_user.try(:admin?) %>
                     <li>
                         <a class="nav-link" href="/admin/users">
@@ -130,45 +132,13 @@
 
         <% if user_signed_in? || current_user.try(:admin?) %>
 
-        <div class="main-panel">
-            <!-- Navbar -->
-                      <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-                          <div class=" container-fluid  ">
-                              <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                                  <span class="navbar-toggler-bar burger-lines"></span>
-                                  <span class="navbar-toggler-bar burger-lines"></span>
-                                  <span class="navbar-toggler-bar burger-lines"></span>
-                              </button>
-                              <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                                  <!-- <ul class="nav navbar-nav mr-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/dashboard">
-                                            <span class="no-icon">Talent</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/dashboard">
-                                            <span class="no-icon">Dashboard</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/dashboard">
-                                            <span class="no-icon">Sign Out</span>
-                                        </a>
-                                    </li>
-                                  </ul> -->
-                                  <%= render 'layouts/navbar_admin' %>
-                              </div>
-                          </div>
-                      </nav>
-                      <!-- End Navbar -->
-            <div class="content">
+        <div id="page-content-wrapper">
+
                 <div class="container-fluid">
 
                   <%= yield %>
 
         </div>
-    </div>
   </div>
 
  <% end %>
@@ -179,6 +149,22 @@
           maintainAspectRatio: false,
           animation: false
           };
+
+
+                    $(function(){
+                     $("#menu-toggle").click(function(e) {
+                         e.preventDefault();
+                         $("#wrapper").toggleClass("toggled");
+                     });
+
+                     $(window).resize(function(e) {
+                       if($(window).width()<=768){
+                         $("#wrapper").removeClass("toggled");
+                       }else{
+                         $("#wrapper").addClass("toggled");
+                       }
+                     });
+                   });
 </script>
 
 </html>

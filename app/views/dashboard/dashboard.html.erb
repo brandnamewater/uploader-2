@@ -1,6 +1,7 @@
-
+<!--
                   <div class="row">
-                      <div class="col-md-4">
+
+                      <div class="col-lg-4">
                           <div class="card ">
                               <div class="card-header ">
                                   <h4 class="card-title">Shouts Analytics</h4>
@@ -25,28 +26,25 @@
                                     </tr>
                                   </tbody>
                                 </table>
-                                </div>
+                              </div>
+                            </div>
+                        </div>
 
-                          </div>
-                      </div>
-                        <div class="col-md-8">
+                        <div class="col-lg-8">
                             <div class="card scroll">
                                 <div class="card-header ">
                                     <h4 class="card-title">Monthly</h4>
                                     <p class="card-category">Monthly Shouts chart</p>
                                 </div>
                                 <div class="card-body ">
-                                  <div data-spy="scroll" data-offset="0">
+                                    <%= line_chart @orders_e.group_by_month(:created_at).count %>
+                                    <%# <%= line_chart @orders_e.group_by_month(:created_at).count, colors: [nil], colors: ['#3ac9d6'],adapter: "highcharts" %> %>
 
-                                    <%= line_chart @orders_e.group_by_month(:created_at).count, colors: [nil], colors: ['#3ac9d6'],adapter: "highcharts" %>
-
-
-                                  </div>
-
+                                </div>
                             </div>
                         </div>
-                    </div>
-                        <div class="col-md-4">
+
+                        <div class="col-lg-4 mt-5">
                             <div class="card ">
                                 <div class="card-header ">
                                     <h4 class="card-title">Shouts Analytics</h4>
@@ -69,11 +67,10 @@
                                       <% end %>
                                     </tbody>
                                   </table>
-                                  </div>
-
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-lg-8 mt-5">
                             <div class="card">
                                 <div class="card-header ">
                                     <h4 class="card-title">Daily</h4>
@@ -84,19 +81,93 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  </div>
-</body>
 
-<script type="text/javascript">
-        var baseOptions = {
-          maintainAspectRatio: false,
-          animation: false
-          };
-</script>
+ -->
 
-</html>
+
+                   <div class="card-deck">
+                       <div class="col-lg-4">
+                           <div class="card ">
+                               <div class="card-header ">
+                                   <h4 class="card-title">Shouts Analytics</h4>
+                                   <p class="card-category">Monthly</p>
+                               </div>
+                               <div class="card-body ">
+                                 <table class="table table-hover">
+                                   <thead>
+                                     <tr>
+                                       <th class="center">Month</th>
+                                       <th class="center">Amount of Shouts</th>
+                                       <th class="center">Average Response Time</th>
+                                     </tr>
+                                   </thead>
+                                   <% @orders_month.each do |month, orders| %>
+                                   <tbody>
+                                     <tr>
+                                         <td><%= month.strftime("%B") %></td>
+                                         <td class="center"><%= orders.count %></td>
+                                         <td class="center"><%= (orders.sum { |order| order.updated_at.day - order.created_at.day } / orders.count )  %> Days</td>
+                                       <% end %>
+                                     </tr>
+                                   </tbody>
+                                 </table>
+                               </div>
+                             </div>
+                         </div>
+
+                         <div class="col-lg-8">
+                             <div class="card scroll">
+                                 <div class="card-header ">
+                                     <h4 class="card-title">Monthly</h4>
+                                     <p class="card-category">Monthly Shouts chart</p>
+                                 </div>
+                                 <div class="card-body ">
+                                     <%= line_chart @orders_e.group_by_month(:created_at).count %>
+                                     <%# <%= line_chart @orders_e.group_by_month(:created_at).count, colors: [nil], colors: ['#3ac9d6'],adapter: "highcharts" %> %>
+
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-lg-4 mt-5">
+                             <div class="card ">
+                                 <div class="card-header ">
+                                     <h4 class="card-title">Shouts Analytics</h4>
+                                     <p class="card-category">Daily</p>
+                                 </div>
+                                 <div class="card-body ">
+                                   <table class="table table-hover">
+                                     <thead>
+                                       <tr>
+                                         <th class="center">Month</th>
+                                         <th class="center">Amount of Shouts</th>
+                                       </tr>
+                                     </thead>
+                                     <% @orders_day.each do |day, orders| %>
+                                     <tbody>
+                                       <tr>
+                                           <td><%= day.strftime("%b/%d") %></td>
+                                           <td class="center"><%= orders.count %></td>
+                                       </tr>
+                                       <% end %>
+                                     </tbody>
+                                   </table>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-lg-8 mt-5">
+                             <div class="card">
+                                 <div class="card-header ">
+                                     <h4 class="card-title">Daily</h4>
+                                     <p class="card-category">Daily Shouts chart</p>
+                                 </div>
+                                 <div class="card-body ">
+                                   <%= line_chart @orders_f.group_by_day(:created_at).count %>
+                                 </div>
+                             </div>
+                         </div>
+
+                     </div>
+                     </div>

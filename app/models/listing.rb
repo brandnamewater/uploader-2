@@ -28,7 +28,7 @@ class Listing < ApplicationRecord
 
 
 
-
+  enum listing_status: { live: 1, hold: 2 }
 
   def self.search(search)
     where("name LIKE ?","%#{search}%")

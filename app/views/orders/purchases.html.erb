@@ -2,17 +2,19 @@
                   <div class="row">
                       <div class="col-md-6">
                           <div class="card ">
+
                               <div class="card-header ">
                                   <h4 class="card-title">Your Shouts Requests</h4>
                                   <p class="card-category">A list of all of your current requests</p>
+                              </div>
                                   <table class="table">
                                     <thead>
                                       <tr>
                                         <th class="center">Order Number</th>
                                         <th class="center">Talent Name</th>
-                                        <th class="center">Price</th>
-                                        <th class="center">Date Requested</th>
-                                        <th class="center">Action</th>
+                                        <!-- <td class="center">Price</td> -->
+                                        <th class="center column-remove-1">Date Requested</th>
+                                        <th class="center">Update</th>
                                       </tr>
                                     </thead>
                                     <% @orders_pending.each do |order| %>
@@ -20,18 +22,20 @@
                                         <tr>
                                           <td class="center"><%= order.id %></td>
                                           <td class="center"><%= order.seller.name %></td>
-                                          <td class="center"><%= number_to_currency(order.order_price) %></td>
-                                          <td class="center"><%= order.created_at.strftime("%B %-d, %Y") %></td>
+                                          <!-- <td class="center"><%= number_to_currency(order.order_price) %></td> -->
+                                          <td class="center column-remove-1"><%= order.created_at.strftime("%B %-d, %Y") %></td>
 
                                           <td class="center">
-                                            <div class="btn-group">
+                                            <!-- <div class="btn-group">
                                               <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                 Action
                                               </button>
-                                              <ul class="dropdown-menu" role="menu">
-                                                <li><%= link_to 'Edit', edit_user_order_path(@user, order), class: "btn btn-link" %></li>
-                                              </ul>
-                                            </div>
+                                              <ul class="dropdown-menu" role="menu"> -->
+                                                <%= link_to edit_order_path(order), class: "btn btn-link" do %>
+                                                <i class="fa fa-indent" aria-hidden="true"></i>
+                                                <% end %>
+                                              <!-- </ul> -->
+                                            <!-- </div> -->
                                           </td>
                                         </tr>
                                         <% end %>
@@ -44,20 +48,22 @@
 
             </div>
         </div>
-    </div>
 
     <div class="col-md-6">
         <div class="card ">
+
             <div class="card-header ">
                 <h4 class="card-title">Your Completed Shouts</h4>
                 <p class="card-category">A list of all of your completed shouts ready for download!</p>
+            </div>
+            <div class="card-body">
                 <table class="table">
                   <thead>
                     <tr>
                       <th class="center">Order Number</th>
                       <th class="center">Talent Name</th>
                       <th class="center">Price</th>
-                      <th class="center">Date Scheduled</th>
+                      <th class="center column-remove-1">Date Scheduled</th>
                       <th class="center">Download Your file!</th>
                       <th class="center">View</th>
 
@@ -69,16 +75,9 @@
                       <td class="center"><%= order.id %></td>
                       <td class="center"><%= order.seller.name %></td>
                       <td class="center"><%= number_to_currency(order.order_price) %></td>
-                      <td class="center"><%= order.created_at.strftime("%b. %-d, %Y") %></td>
-                      <td class="center">
-
-                            <%= link_to "Download it", order.video_order.video.url %>
-
-
-                      </td>
-                      <td class="center"><%= link_to 'View', user_order_path(@user, order) %></td>
-
-
+                      <td class="center column-remove-1"><%= order.created_at.strftime("%b. %-d, %Y") %></td>
+                      <td class="center"><%= link_to "Download it", order.video_order.video.url %></td>
+                      <td class="center"><%= link_to 'View', order_path(order) %></td>
                     </tr>
                     <% end %>
                   </tbody>
@@ -86,13 +85,11 @@
                 <div class="digg_pagination">
                   <%= will_paginate @orders_charged, :param_name => 'orders_charged_page_1', :page_links => false %>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-
-</div>
-</div>
-</div>
-
-  </div>
 
   <div id="myModal-p" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -108,7 +105,7 @@
              previous settings and you will need to re-enter your banking data.
             You should only be doing this if you have changed banks or bank accounts,
             have a new location or your banking information has updated on the banks end.</p>
-          <%= link_to "Yes", new_user_stripe_account_path(@user) %>/
+          <%= link_to "Yes", new_stripe_account_path(@user) %>/
           <%= link_to "No", "javascript:void(0)",'data-dismiss': "modal" %>
         </div>
         <div class="modal-footer">
@@ -121,11 +118,7 @@
 
 </body>
 
-<script type="text/javascript">
-        var baseOptions = {
-          maintainAspectRatio: false,
-          animation: false
-          };
+<script>
 </script>
 
 </html>

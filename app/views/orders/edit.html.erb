@@ -109,7 +109,7 @@
                                 <div class="card-body table-full-width table-responsive">
                                   <div class="padding_5">
 
-                                  <%= form_for([@listing, @order], :url => charge_update_order_path ) do |form| %>
+                                  <%= form_for([@listing, @order]) do |form| %>
 
 
                                     <% if @order.errors.any? %>
@@ -240,20 +240,6 @@
   </div>
 </div>
 
-
-
-
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-        demo.showNotification();
-
-    });
-</script>
 
 <script>
 

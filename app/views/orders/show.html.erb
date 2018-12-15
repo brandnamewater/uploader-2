@@ -111,18 +111,7 @@
                                 <div class="card-body table-full-width table-responsive">
                                   <div class="padding_5">
 
-                                  <%= form_for([@listing, @order], :url => charge_update_order_path ) do |form| %>
-                                    <% if @order.errors.any? %>
-                                      <div id="error_explanation">
-                                        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-                                        <ul>
-                                        <% order.errors.full_messages.each do |message| %>
-                                          <li><%= message %></li>
-                                        <% end %>
-                                        </ul>
-                                      </div>
-                                    <% end %>
                                     <%= image_tag @order.listing.image_url(:thumb) %>
 
 
@@ -134,7 +123,6 @@
 
 
 
-                                    <% end %>
                                 </div>
                                 </div>
                             </div>
@@ -184,7 +172,7 @@
 
 
                                 <% if @order.order_status["created"] %>
-                                <%= link_to "Edit Order", edit_user_order_path(@user, @order), class: "btn btn-primary" %>
+                                <%= link_to "Edit Order", edit_order_path(@order), class: "btn btn-primary" %>
                                   <%= form_for @order, remote: true do |f| %>
                                   <%= f.hidden_field :order_status, value: "cancelled" %>
 
@@ -239,31 +227,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
-    // $(window).on('onclick',function(){
-    //     $('#myModal-3').modal('show');
-    // });
 
-
-</script>
-
-
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!--  Chartist Plugin  -->
-<!--  Notifications Plugin    -->
-
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-        demo.showNotification();
-
-    });
-</script>
 
 <script>
 function refreshPage(){

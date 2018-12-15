@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
 
-  # devise_for :users
+  resources :affiliate_dashboards
+  devise_for :affiliates
   resources :video_orders
 
 
+  authenticated :affiliate do
+    get 'a/clients' => 'affiliate_dashboards#clients'
+  end
 
-
-
+  authenticated :user, ->(user) { user.buyer? } do
+    get 'c/purchases' => 'customer_dashboard#purchases'
+    get 'c/dashboard' => 'customer_dashboard#buyer_dashboard'
+  end
 
 
   resources :admin_dashboard
@@ -38,13 +44,9 @@ Rails.application.routes.draw do
 
   resources :users
 
-  resources :users do
-    resources :stripe_accounts
-  end
+  resources :stripe_accounts
 
-  resources :stripe_accounts do
-    resources :bank_accounts
-  end
+  resources :bank_accounts
 
   resources :orders do
     resources :video_orders
@@ -56,18 +58,9 @@ Rails.application.routes.draw do
     resources :orders
 end
 
-  resources :users do
     resources :orders
-  end
 
 resources :bank_accounts
-
-  resources :orders do
-    member do
-      patch :charge_update
-      put :charge_update
-    end
-  end
 
 
   get 'stripe_show' => "stripe_accounts#show"
@@ -79,37 +72,18 @@ resources :bank_accounts
 
   get 'cancel' => "orders#cancel_update"
 
-  # resources :listings do
-  #   resources :charges
-  # end
-  # resources :orders do
-  #   resource :charge, only: [:new, :create, :show]
-  # end
 
   get 'seller' => "listings#seller"
-  #
-  # resource :orders
-  # resolve('Charge') { [:charges] }
 
-  # resource :charges
-  # resolve('Charge') { [:orders] }
-
-  # resources :charges
   get 'edit_stripe' => "stripe_accounts#edit"
 
-  # get 'stripe_accounts/full' => "stripe_accounts#full"
 
-
-  # resources :orders do
-  #   resources :charges
-  # end
 
 
   #new_order_sales_upload post '/orders/:order_ids(.:format) sales_uploads#new'
  get 'sales' => "orders#sales"
  post 'sales' => "orders#sales"
 
-  #post 'sales' => "orders#sales"
   get 'talent' => "listings#listings_page"
 
   get 'purchases' => "orders#purchases"
@@ -125,6 +99,8 @@ resources :bank_accounts
   get 'account' => "dashboard#account"
   get 'payout_destination' => "dashboard#payout_destination"
 
+  get 'account_affiliate' => "affiliate_dashboards#account_affiliate"
+
 
 get 'auth' => "users#index"
 
@@ -132,9 +108,7 @@ get 'stripe' => "listings#stripe"
 
 get 'analytics' => "dashboard#order_analytics"
 
-# post 'charge' => "layouts#charges"
-#
-# post 'charge' => "listings#show"
+
 
 
 
@@ -143,6 +117,5 @@ get 'analytics' => "dashboard#order_analytics"
   root to: "listings#index"
 
 
-# get '/:user_link', to: 'user_listings#show'
 
 end

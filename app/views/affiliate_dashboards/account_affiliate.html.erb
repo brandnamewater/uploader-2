@@ -1,0 +1,130 @@
+<link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' />
+
+                  <div class="row">
+                    <div class="col-md-4">
+                        <div class="card ">
+                            <div class="card-header ">
+                              <% @transaction_1.data.each do |transaction| %>
+                                <h4 class="card-title">Next Scheduled Payout</h4>
+                                <p class="card-category">Estimated Date: <%= as_table_row_transaction(Time.at(transaction["available_on"]).strftime('%B, %d, %Y on %A')) %></p>
+                            </div>
+                            <div class="card-body ">
+                                  <h1>
+                                      <td><%= number_to_currency(as_table_row_transaction(transaction["amount"] / 100.00 )) %></td>
+                                      <td><%= as_table_row_transaction(transaction["currency"]).upcase %></td>
+                                  </h1>
+                              <% end %>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="card ">
+                              <div class="card-header ">
+                                  <h4 class="card-title">Account Balance</h4>
+                                  <p class="card-category">Your account balance pending settlement</p>
+                              </div>
+                              <div class="card-body ">
+                                <% @balance.available.each do |balance| %>
+                                    <h1><%= number_to_currency(balance["amount"] / 100.0 )  %></h1>
+                                <% end %>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="card ">
+                              <div class="card-header ">
+                                <% @payout_1.each do |payout| %>
+                                  <h4 class="card-title">Payouts</h4>
+                                  <p class="card-category">Deposited on <%= as_table_row_payout(Time.at(payout["arrival_date"]).strftime('%B, %d, %Y')) %></p>
+                              </div>
+                              <div class="card-body ">
+                                            <h1>
+                                                <td><%= number_to_currency(as_table_row_payout(payout["amount"] / 100.00 )) %></td>
+                                                <td><%= as_table_row_payout(payout["currency"]).upcase %></td>
+                                            </h1>
+                                        <% end %>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="card ">
+                              <div class="card-header ">
+                                  <h4 class="card-title">Scheduled Payouts</h4>
+                                  <p class="card-category">Your scheduled payouts</p>
+                              </div>
+                              <div class="card-body ">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th>Currency</th> -->
+                                            <th>Amount</th>
+                                            <th>Available On (est.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% @transaction.data.each do |transaction| %>
+                                            <tr>
+                                                <!-- <td><%= as_table_row_transaction(transaction["currency"]).upcase %></td> -->
+                                                <td><%= number_to_currency(as_table_row_transaction(transaction["amount"] / 100.00 )) %></td>
+                                                <!-- <td><%= as_table_row_transaction(transaction["type"]) %></td> -->
+                                                <td><%= as_table_row_transaction(Time.at(transaction["available_on"]).strftime('%m/%d/%Y')) %></td>
+                                            </tr>
+                                        <% end %>
+                                        <!-- <%= @transaction %> -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="card-header ">
+                                <h4 class="card-title">Payouts</h4>
+                                <p class="card-category">Your past payouts</p>
+                            </div>
+                            <div class="card-body ">
+                              <table class="table table-bordered table-striped table-hover">
+                                  <thead>
+                                      <tr>
+                                          <!-- <th>Currency</th> -->
+                                          <th>Amount</th>
+                                          <th>Deposited</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <% @payouts.each do |payout| %>
+                                          <tr>
+                                              <!-- <td><%= link_to "View Details" , payout_destination_path(payout.destination) %></td> -->
+                                              <!-- <td><%= as_table_row_payout(payout["currency"]) %></td> -->
+                                              <td><%= number_to_currency(as_table_row_payout(payout["amount"] / 100.00 )) %></td>
+                                              <td><%= as_table_row_payout(Time.at(payout["arrival_date"]).strftime('%m/%d/%Y')) %></td>
+
+                                          </tr>
+                                      <% end %>
+                                  </tbody>
+                                  <%= @balance %>
+                              </table>
+                            </div>
+                            <div class="card-footer ">
+                                <hr>
+                                <div class="stats">
+                                    <p><i class="fa fa-check"></i>View Payout Schedule</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+        var baseOptions = {
+          maintainAspectRatio: false,
+          animation: false
+          };
+</script>
+
+</html>

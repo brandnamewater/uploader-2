@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @order.seller.name %></h1>
+    <p>
+      Your order has been successfully cancelled.
+
+      Either you or the Shout requester has cancelled the request.
+
+      Order ID: <%= @order.id %>
+    </p>
+  </body>
+</html>

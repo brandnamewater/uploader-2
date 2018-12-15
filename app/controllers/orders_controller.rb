@@ -49,7 +49,7 @@ class OrdersController < ApplicationController
     @user = current_user
     @video_order = VideoOrder.new
     @video_order_id = @video_order.order_id
-    # @order = current_user.order.find(params[:id])
+    @order = Order.all.find(params[:id])
   end
 
   # GET /orders/new
@@ -68,7 +68,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @user = current_user.buyer
+    @user = current_user
   end
 
 
@@ -148,7 +148,7 @@ class OrdersController < ApplicationController
             if user_signed_in?
               @user = current_user
               OrderMailer.order_email(@user, @order).deliver
-              format.html { redirect_to ([@user, @order]), notice: 'Order was successfully created.' }
+              format.html { redirect_to @order, notice: 'Order was successfully created.' }
               format.json { render :show, status: :created, location: @order }
               else
                 format.html { render :new }
@@ -157,7 +157,7 @@ class OrdersController < ApplicationController
               if buyer_signed_in?
                 @user = current_buyer
                 OrderMailer.order_email(@user, @order).deliver
-                format.html { redirect_to ([@user, @order]), notice: 'Order was successfully created.' }
+                format.html { redirect_to @order, notice: 'Order was successfully created.' }
                 format.json { render :show, status: :created, location: @order }
               else
                 format.html { render :new }
@@ -174,8 +174,10 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update(order_status)
         if params[:order_status == "cancelled"]
-          format.html { redirect_to ([@user, @order]), notice: 'Order was successfully cancelled.' }
+          format.html { redirect_to @order, notice: 'Order was successfully cancelled.' }
           format.json { render :show, status: :ok, location: @order }
+          OrderMailer.order_email_cancelled_buyer(@user, @order).deliver
+          OrderMailer.order_email_cancelled_seller(@user, @order).deliver
         else
           format.html { render :edit }
           format.json { render json: @order.errors, status: :unprocessable_entity }
@@ -183,14 +185,14 @@ class OrdersController < ApplicationController
       end
       if @order.update(order_params)
         if user_signed_in?
-          format.html { redirect_to ([@user, @order]), notice: 'Order was successfully updated.' }
+          format.html { redirect_to @order, notice: 'Order was successfully updated.' }
           format.json { render :show, status: :ok, location: @order }
         else
           format.html { render :edit }
           format.json { render json: @order.errors, status: :unprocessable_entity }
         end
         if buyer_signed_in?
-          format.html { redirect_to ([@user, @order]), notice: 'Order was successfully updated.' }
+          format.html { redirect_to @order, notice: 'Order was successfully updated.' }
           format.json { render :show, status: :ok, location: @order }
         else
           format.html { render :edit }

@@ -1,7 +1,8 @@
 class ListingsController < ApplicationController
   load_and_authorize_resource
   # layout :admin_layout
-  layout "admin", :only => [ :payment, :seller ]
+  layout :determine_layout, :only => [ :payment, :seller, :edit, :new ]
+  # layout "admin", :only => [ :payment, :seller, :edit ]
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
@@ -42,7 +43,7 @@ class ListingsController < ApplicationController
   end
 
   def listings_page
-    @listings = Listing.all
+    @listings = Listing.all.where(listing_status: [1] )
 
     if params[:search]
       @listings = Listing.search(params[:search]).order(created_at: :desc)
@@ -72,14 +73,14 @@ class ListingsController < ApplicationController
   # GET /listings
   # GET /listings.json
   def index
-    @listings = Listing.all #.order(created_at: :desc)
+    @listings = Listing.all.where(listing_status: [1] )
 
     if params[:search]
       @listings = Listing.search(params[:search]).order(created_at: :desc)
     elsif params[:category]
       @listings = Category.find(params[:category]).listings
     else
-      @listings = Listing.all.order(created_at: :desc)
+      @listings = Listing.all.where(listing_status: [1] ).order(created_at: :desc)
     end
     @categories = Category.all
 
@@ -169,7 +170,7 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.require(:listing).permit(:attr1, :name, :description, :price, :image, {category_ids: []})
+      params.require(:listing).permit(:attr1, :name, :description, :price, :image, {category_ids: []}, :listing_status)
     end
 
     def check_user
@@ -188,6 +189,10 @@ class ListingsController < ApplicationController
       if current_user != (@user.approved == true)
         redirect_to root_url, alert: "Sorry, your account isn't approved, please contact the admins"
       end
+    end
+
+    def determine_layout
+      current_affiliate ? "affiliate_dashboard" : "admin"
     end
 
     # def admin_layout

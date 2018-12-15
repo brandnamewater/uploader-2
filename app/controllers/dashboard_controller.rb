@@ -1,18 +1,15 @@
 class DashboardController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate
   # load_and_authorize_resource
-  layout "admin"
+  layout :determine_layout
 
 
   def account
 
     @balance = Stripe::Balance.retrieve(
-      {:stripe_account => current_user.stripe_token}
+      { stripe_account: (current_user || current_affiliate).stripe_account.acct_id }
     )
 
-    # @payout = Stripe::Payout.retrieve(
-    #   {:stripe_account => current_user.stripe_token}
-    # )
 
     @transaction = Stripe::BalanceTransaction.all(
       {
@@ -20,7 +17,7 @@ class DashboardController < ApplicationController
         type: 'payment',
         available_on: { gt: Time.now.to_i },
       },
-        { stripe_account: current_user.stripe_token }
+        { stripe_account: (current_user || current_affiliate).stripe_account.acct_id }
     )
 
     @transaction_1 = Stripe::BalanceTransaction.all(
@@ -29,14 +26,14 @@ class DashboardController < ApplicationController
         type: 'payment',
         available_on: { gt: Time.now.to_i },
       },
-        { stripe_account: current_user.stripe_token }
+        { stripe_account: (current_user || current_affiliate).stripe_account.acct_id }
     )
 
     @transfer = Stripe::Transfer.list(
       {
         limit: 100
       },
-      {stripe_account: current_user.stripe_token}
+      {stripe_account: (current_user || current_affiliate).stripe_account.acct_id }
     )
 
     @payments = Stripe::Charge.list(
@@ -44,7 +41,7 @@ class DashboardController < ApplicationController
         limit: 100, # The number of charges to retrieve (between 1 and 100)
         expand: ['data.source_transfer', 'data.application_fee'] # Expand other objects for additional detail
       },
-      { stripe_account: current_user.stripe_token } # The Stripe ID of the user viewing the dashboard
+      { stripe_account: (current_user || current_affiliate).stripe_account.acct_id } # The Stripe ID of the user viewing the dashboard
     )
 
     @payouts = Stripe::Payout.list(
@@ -52,7 +49,7 @@ class DashboardController < ApplicationController
         limit: 100,
         expand: ['data.destination'] # Get some extra detail about the bank account
       },
-      { stripe_account: current_user.stripe_token } # Again, authenticating with the ID of the connected account
+      { stripe_account: (current_user || current_affiliate).stripe_account.acct_id } # Again, authenticating with the ID of the connected account
     )
 
     @payout_1 = Stripe::Payout.list(
@@ -60,7 +57,7 @@ class DashboardController < ApplicationController
         limit: 1,
         expand: ['data.destination'] # Get some extra detail about the bank account
       },
-      { stripe_account: current_user.stripe_token } # Again, authenticating with the ID of the connected account
+      { stripe_account: (current_user || current_affiliate).stripe_account.acct_id } # Again, authenticating with the ID of the connected account
     )
 
 
@@ -75,15 +72,15 @@ class DashboardController < ApplicationController
         expand: ['data.source.source_transfer'], # Expand the source_transfer for extra detail
         limit: 100
       },
-      { stripe_account: current_user.stripe_token }
+      { stripe_account: (current_user || current_affiliate).stripe_account.acct_id }
     )
 
   end
 
 
   def settings
-    @user = current_user
-    @stripe_account = current_user.stripe_account
+    @user = (current_user || current_affiliate)
+    @stripe_account = (current_user || current_affiliate).stripe_account
   end
 
   def order_analytics
@@ -114,7 +111,7 @@ class DashboardController < ApplicationController
 
   def tables
 
-    user = current_user || current_buyer
+    user = current_user
     orders = Order.where(seller: user)
     orders_with_video = Order.find_by(video: present?)
     orders_charged = orders.where(order_status: [2] )
@@ -135,5 +132,20 @@ class DashboardController < ApplicationController
 
   end
 
+
+  private
+
+  def authenticate
+    if current_affiliate != nil
+     authenticate_affiliate!
+    else
+     authenticate_user!
+    end
+
+  end
+
+  def determine_layout
+    current_affiliate ? "affiliate_dashboard" : "admin"
+  end
 
 end

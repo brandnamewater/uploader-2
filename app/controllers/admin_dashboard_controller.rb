@@ -3,17 +3,17 @@ class AdminDashboardController < ApplicationController
 
   def users
     @users = User.all
-    @users_count_buyers = User.all.where(buyer: [1]).count
-    @users_count_sellers = User.all.where(seller: [1]).count
+    @users_count_buyers = User.all.where(role: [1]).count
+    @users_count_sellers = User.all.where(role: [2]).count
 
   end
 
   def sellers
-    @users = User.all.where(seller: [1])
+    @users = User.all.where(role: [2])
   end
 
   def buyers
-    @users = User.all.where(buyer: [1])
+    @users = User.all.where(role: [1])
 
   end
 
@@ -42,9 +42,11 @@ class AdminDashboardController < ApplicationController
     @visits_referring = Ahoy::Visit.group("referring_domain").count
 
   end
+
   def create_seller
     @user = User.new
   end
+  
   def update
     @user = User.find(params[:id])
 

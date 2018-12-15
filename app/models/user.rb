@@ -17,6 +17,10 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  belongs_to :affiliate, optional: true
+
+  # has_one :affiliate
+
   has_one :listings, dependent: :destroy
   has_one :stripe_account
   accepts_nested_attributes_for :stripe_account

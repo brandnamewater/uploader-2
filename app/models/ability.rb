@@ -4,16 +4,18 @@ class Ability
   def initialize(user)
 
       user ||= User.new # guest user (not logged in)
+      affiliate ||= Affiliate.new # guest user (not logged in)
       #Admin
       if user.admin?
         can :manage, :all
       #Seller && Buyer
-    elsif user.seller? || user.buyer?
+    elsif user.seller? || user.buyer? || affiliate
           can :manage, Listing, user_id: user.id
           can :read, Listing
           can :manage, Order, buyer_id: user.id
           can :manage, Order, seller_id: user.id
           can :manage, StripeAccount, user_id: user.id
+          can :manage, StripeAccount, affiliate_id: affiliate.id
           can :manage, BankAccount, user_id: user.id
           can :manage, User, user_id: user.id
 

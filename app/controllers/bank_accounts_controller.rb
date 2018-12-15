@@ -1,22 +1,22 @@
 class BankAccountsController < ApplicationController
-  layout "admin"
+  layout :determine_layout
 
   before_action :set_bank_account, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate
 
   def new
     # Redirect if no stripe account exists yet
-    unless current_user.stripe_account.acct_id
-      redirect_to new_user_stripe_account_path and return
+    unless (current_user || current_affiliate).stripe_account.acct_id
+      redirect_to new_stripe_account_path and return
     end
 
     begin
       # Retrieve the account object for this user
-      @stripe_account = Stripe::Account.retrieve(current_user.stripe_token)
+      @stripe_account = Stripe::Account.retrieve((current_user || current_affiliate).stripe_account.acct_id )
       # @stripe_account = Stripe::Account.retrieve(@stripe_account.acct_id)
 
       @bank_account = BankAccount.new
-      @stripe_account = StripeAccount.find(params[:stripe_account_id])
+      # @stripe_account = StripeAccount.find(params[:stripe_account_id])
 
 
     # Handle exceptions from Stripe
@@ -33,7 +33,7 @@ class BankAccountsController < ApplicationController
 
     # require 'pry'
     # Redirect if no token is POSTed or the user doesn't have a Stripe account
-    unless params[:token] && current_user.stripe_token
+    unless params[:token] && (current_user || current_affiliate).stripe_account.acct_id
       redirect_to new_bank_account_path and return
     end
 
@@ -41,7 +41,7 @@ class BankAccountsController < ApplicationController
       # Retrieve the account object for this user
       # Stripe.api_key = "sk_test_5RwdUKMOUYo1TQnbDAgPy0QG"
       token = params[:token]
-      stripe_account = Stripe::Account.retrieve(current_user.stripe_token)
+      stripe_account = Stripe::Account.retrieve((current_user || current_affiliate).stripe_account.acct_id)
       # stripe_account.external_accounts.create({
       #   # :source => {
       #     :object => "bank_account",
@@ -94,6 +94,18 @@ class BankAccountsController < ApplicationController
   # binding.pry
 
   private
+
+  def authenticate
+    if current_affiliate != nil
+     authenticate_affiliate!
+    else
+     authenticate_user!
+    end
+  end
+
+  def determine_layout
+    current_affiliate ? "affiliate_dashboard" : "admin"
+  end
 
   def set_bank_account
     @bank_account = BankAccount.find(params[:id])

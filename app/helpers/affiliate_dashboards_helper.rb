@@ -1,0 +1,2 @@
+module AffiliateDashboardsHelper
+end

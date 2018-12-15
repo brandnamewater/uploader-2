@@ -56,7 +56,7 @@
                         <td><%= user.email %></td>
                         <td><%= user.approved %></td>
                         <td>
-                          <% if user.seller == true %>
+                          <% if user.seller? %>
                             <p>Approved</p>
                             <% else %>
                               <%= form_for user, remote: true do |f| %>

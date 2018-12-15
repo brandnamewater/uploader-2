@@ -1,29 +1,36 @@
-
-                  <div class="row">
-                      <div class="col-md-12">
+                    <div class="col-lg-12">
                         <div class="card ">
                             <div class="card-header ">
                                 <h4 class="card-title">Settings</h4>
                                 <p class="card-category"> </p>
                             </div>
                             <div class="card-body">
-                              <ul class="flex-container">
                               <div class="row">
 
-                                <a href="/users/edit" class="no-decoration">
-                                  <li class="setting-section">
-                                    <div class="setting-awesome-font">
-                                      <i class="fa fa-user" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="setting-text">
-                                      <h5>Account</h5>
-                                      <p>Manage your account login details<p>
-                                    </div>
-                                  </li>
-                                </a>
-                                <% if current_user.stripe_account %>
-                                <%= link_to user_stripe_account_path(@user, @stripe_account) do %>
-                                  <li class="setting-section">
+                              <div class="col-lg-4">
+                                <div class="settings">
+                                  <% if current_user %>
+                                    <a href="/users/edit" class="no-decoration">
+                                    <% end %>
+                                    <% if current_affiliate %>
+                                    <a href="/affiliates/edit" class="no-decoration">
+                                    <% end %>
+                                        <div class="setting-awesome-font">
+                                          <i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="setting-text">
+                                          <h5>Account</h5>
+                                          <p>Manage your account login details<p>
+                                        </div>
+                                      </a>
+                                    </a>
+                                  </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                  <div class="settings">
+                                    <% if (current_user || current_affiliate).stripe_account %>
+                                    <%= link_to stripe_account_path(@stripe_account), class: "no-decoration" do %>
                                     <div class="setting-awesome-font">
                                       <i class="fa fa-credit-card" aria-hidden="true"></i>
                                     </div>
@@ -31,11 +38,11 @@
                                       <h5>Payout Settings</h5>
                                       <p>Enable and manage your payout settings and details<p>
                                     </div>
-                                  </li>
-                                  <% end %>
-                                  <% else current_user.stripe_account? %>
-                                  <%= link_to new_user_stripe_account_path(@user) do %>
-                                    <li class="setting-section">
+                                    <% end %>
+
+                                    <% elsif current_affiliate.stripe_account==false %>
+                                    <%= link_to new_stripe_account_path, class: "no-decoration" do %>
+                                    <div class="col-lg-4 settings">
                                       <div class="setting-awesome-font">
                                         <i class="fa fa-credit-card" aria-hidden="true"></i>
                                       </div>
@@ -43,49 +50,41 @@
                                         <h5>Payout Settings</h5>
                                         <p>Enable and manage your payout settings and details<p>
                                       </div>
-                                    </li>
+                                    </div>
                                     <% end %>
                                     <% end %>
+                                  </div>
+                                </div>
 
-                                <a href="/account" class="no-decoration">
-                                  <li class="setting-section">
+                                <div class="col-lg-4">
+                                  <div class="settings">
+                                    <%= link_to account_path, class: "no-decoration" do %>
                                     <div class="setting-awesome-font">
-                                      <i class="fa fa-money" aria-hidden="true"></i>
+                                      <i class="fa fa-credit-card" aria-hidden="true"></i>
                                     </div>
                                     <div class="setting-text">
                                       <h5>Payout History</h5>
-                                      <p>View all past payments to your account<p>
+                                      <p>View your payout history and scheduled settlements<p>
                                     </div>
-                                  </li>
-                                </a>
-
+                                    <% end %>
+                                  </div>
+                                </div>
 
                             </div>
-                              </div>
+                          </div>
 
                         </div>
                     </div>
+                  </div>
                   </div>
 
 
 
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <!-- </div>
-        </div>
-    </div>
-  </div> -->
-
 </body>
 
-<script type="text/javascript">
-        var baseOptions = {
-          maintainAspectRatio: false,
-          animation: false
-          };
+<script>
+
 </script>
 
 </html>

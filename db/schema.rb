@@ -10,7 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_02_110949) do
+ActiveRecord::Schema.define(version: 2018_12_08_084240) do
+
+  create_table "affiliate_dashboards", force: :cascade do |t|
+    t.string "clients"
+    t.string "analytics"
+    t.string "orders"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "affiliates", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "commission", default: "0.05", null: false
+    t.string "name"
+    t.index ["email"], name: "index_affiliates_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_affiliates_on_reset_password_token", unique: true
+  end
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
@@ -140,6 +174,7 @@ ActiveRecord::Schema.define(version: 2018_12_02_110949) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.integer "user_id"
+    t.integer "listing_status", default: 1
   end
 
   create_table "orders", force: :cascade do |t|
@@ -192,6 +227,7 @@ ActiveRecord::Schema.define(version: 2018_12_02_110949) do
     t.string "acct_id"
     t.string "country"
     t.integer "user_id"
+    t.integer "affiliate_id"
   end
 
   create_table "user_listings", force: :cascade do |t|
@@ -224,6 +260,8 @@ ActiveRecord::Schema.define(version: 2018_12_02_110949) do
     t.boolean "approved", default: true, null: false
     t.integer "role", default: 1
     t.string "stripe_token"
+    t.integer "affiliate_id"
+    t.decimal "commission", default: "0.75", null: false
     t.index ["approved"], name: "index_users_on_approved"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

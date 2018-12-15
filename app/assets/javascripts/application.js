@@ -19,10 +19,6 @@
 //= require bootstrap-sprockets
 
 //= require jquery
-//= require bootstrap.min.js
-//= require bootstrap-switch.js
-//= require bootstrap-notify.js
-//= require light-bootstrap-dashboard.js
 
 //= require Chart.bundle
 //= require highcharts

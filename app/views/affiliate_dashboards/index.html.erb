@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Affiliate Dashboards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Clients</th>
+      <th>Analytics</th>
+      <th>Orders</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @affiliate_dashboards.each do |affiliate_dashboard| %>
+      <tr>
+        <td><%= affiliate_dashboard.clients %></td>
+        <td><%= affiliate_dashboard.analytics %></td>
+        <td><%= affiliate_dashboard.orders %></td>
+        <td><%= link_to 'Show', affiliate_dashboard %></td>
+        <td><%= link_to 'Edit', edit_affiliate_dashboard_path(affiliate_dashboard) %></td>
+        <td><%= link_to 'Destroy', affiliate_dashboard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Affiliate Dashboard', new_affiliate_dashboard_path %>

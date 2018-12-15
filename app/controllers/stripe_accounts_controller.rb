@@ -1,7 +1,9 @@
 class StripeAccountsController < ApplicationController
-  layout 'admin'
+  layout :determine_layout
   before_action :set_stripe_account, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate
+
+
 
 
   # GET /stripe_accounts
@@ -13,10 +15,10 @@ class StripeAccountsController < ApplicationController
   # GET /stripe_accounts/1
   # GET /stripe_accounts/1.json
   def show
-    @user = current_user.id
+    # @user = current_user.id
     @stripe_account = StripeAccount.find(params[:id])
 
-    @stripe_account_bank = Stripe::Account.retrieve(current_user.stripe_account.acct_id){
+    @stripe_account_bank = Stripe::Account.retrieve((current_user || current_affiliate).stripe_account.acct_id){
       :id
 
     @bank_account = @stripe_account_bank.external_accounts.retrieve(id)
@@ -26,13 +28,14 @@ class StripeAccountsController < ApplicationController
   # GET /stripe_accounts/new
   def new
     @stripe_account = StripeAccount.new
-    @user = User.find(params[:user_id])
+    # @user = User.find(params[:user_id])
+    # @affiliate = Affiliate.find(params[:affiliiate_id])
 
   end
 
   # GET /stripe_accounts/1/edit
   def edit
-    @user = User.find(params[:user_id])
+    # @user = User.find(params[:user_id])
 
     # Check for a valid account ID
     # unless params[:acct_id] && params[:id].eql?(current_user.stripe_token)
@@ -42,7 +45,7 @@ class StripeAccountsController < ApplicationController
 
   # Retrieve the Stripe account to find fields needed
     # @stripe_account = Stripe::Account.retrieve(params[:acct_id])
-    @stripe_account = Stripe::Account.retrieve(current_user.stripe_account.acct_id)
+    @stripe_account = Stripe::Account.retrieve((current_user || current_affiliate).stripe_account.acct_id)
 
     # @stripe_account = Stripe::Account.retrieve(@stripe_account.acct_id)
 
@@ -72,7 +75,7 @@ class StripeAccountsController < ApplicationController
     # @user = User.find(params[:user_id])
     # @stripe_account.user_id = current_user.id
 
-    @user = User.find(params[:user_id])
+    @user = (current_user || current_affiliate)
     @stripe_account = @user.build_stripe_account(stripe_account_params)
 
 
@@ -105,7 +108,7 @@ class StripeAccountsController < ApplicationController
     })
 
     @stripe_account.acct_id = acct.id
-    @user.stripe_token = acct.id
+    # @user.stripe_token = acct.id
 
 
 
@@ -113,7 +116,8 @@ class StripeAccountsController < ApplicationController
 
       # @user = User.find(params[:id])
 
-      if @stripe_account.save! && @user.save
+      if @stripe_account.save!
+        # && @user.save
 
 
 
@@ -134,19 +138,19 @@ class StripeAccountsController < ApplicationController
   # PATCH/PUT /stripe_accounts/1.json
   def update
 
-    unless current_user.stripe_token
-    redirect_to new_user_stripe_account_path and return
-  end
+    unless (current_user || current_affiliate).stripe_account
+      redirect_to new_user_stripe_account_path and return
+    end
 
   begin
     # Retrieve the Stripe account
-    @stripe_account = Stripe::Account.retrieve(current_user.stripe_token)
+    @stripe_account = Stripe::Account.retrieve((current_user || current_affiliate).stripe_account.acct_id)
 
-    @stripe_account = StripeAccount.new(account_params)
+    @stripe_account = StripeAccount.new(stripe_account_params)
 
 
     # Reject empty values
-    account_params.each do |key, value|
+    stripe_account_params.each do |key, value|
       if value.empty?
         flash.now[:alert] = "Please complete all fields."
         render 'edit' and return
@@ -224,6 +228,29 @@ end
     def stripe_account_params
       params.require(:stripe_account).permit(:first_name, :last_name, :account_type, :dob_month, :dob_day, :dob_year, :tos,
         :ssn_last_4, :address_line1, :address_city, :address_state, :address_postal, :business_name,
-        :business_tax_id, :full_account, :personal_id_number, :verification_document, :acct_id, :user_id)
+        :business_tax_id, :full_account, :personal_id_number, :verification_document, :acct_id, :user_id, :affiliate_id)
     end
+
+  private
+
+  def authenticate
+    if current_affiliate != nil
+     authenticate_affiliate!
+    else
+     authenticate_user!
+    end
+  end
+
+  def which_user
+    if current_affiliate
+     Affiliate.find(params[:affiliate_id])
+    else
+     User.find(params[:user_id])
+    end
+  end
+
+  def determine_layout
+    current_affiliate ? "affiliate_dashboard" : "admin"
+  end
+
 end

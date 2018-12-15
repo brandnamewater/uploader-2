@@ -1,0 +1,2 @@
+class AffiliateDashboard < ApplicationRecord
+end

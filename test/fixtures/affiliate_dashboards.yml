@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  clients: MyString
+  analytics: MyString
+  orders: MyString
+
+two:
+  clients: MyString
+  analytics: MyString
+  orders: MyString

@@ -5,7 +5,7 @@
                                 <div class="card-header ">
                                     <h4 class="card-title">Payment Information</h4>
                                     <p class="card-category">This information is needed for payments.</p>
-                                    <% if current_user.stripe_token.present? %>
+                                    <% if (current_user || current_affiliate).stripe_account.acct_id.present? %>
                                     <p class="card-category" style="color:green">You already have a connected account for your payouts from Shouts.  Only update your account if your banking information has changed.<p>
                                       <% end%>
 
@@ -63,7 +63,7 @@
                                                 </div>
                                               </div>
                                               <hr>
-                                              <%= link_to 'Edit', edit_user_stripe_account_path %>
+                                              <%= link_to 'Edit', edit_stripe_account_path %>
                                             <hr>
                                         </div>
                                       </div>
@@ -87,7 +87,7 @@
                                                   </div>
                                                 </div>
                                                 <hr>
-                                                <%= link_to 'Edit', new_stripe_account_bank_account_path(@stripe_account) %>
+                                                <%= link_to 'Edit', new_bank_account_path(@stripe_account) %>
                                               <hr>
                                           </div>
                                         </div>

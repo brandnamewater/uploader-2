@@ -1,22 +1,8 @@
-<head>
-<!-- <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/> -->
-
-</head>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
-
-
 <%= form_with(model: listing, local: true) do |form| %>
 
   <% if listing.errors.any? %>
     <div id="error_explanation" class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria hidden="true">&times;</button
+      <button type="button" class="close" data-dismiss="alert" aria hidden="true">&times;</button>
 
 
       <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
@@ -28,9 +14,7 @@
       </ul>
     </div>
   <% end %>
-    <div class="col-md-6">
-    </div>
-      <div class="col-md-6">
+
           <div class="field">
             <%= form.label :name %>
             <%= form.text_field :name, class: "form-control" %>
@@ -104,5 +88,4 @@ $('#accordion').each(function(){
             <%= form.submit %>
           </div>
 <% end %>
-</div>
 </div>

@@ -112,14 +112,7 @@
                                 </div>
 
                             </div>
-                            <!-- <% if current_user.stripe_token.present? %>
-                            <%= link_to 'Edit Payment Settings', new_user_stripe_account_path(@user), data: {
-                              :confirm =>'Are you sure?
-                                Editing any of your current payment settings will override any prevoius setting and you will need to re-enter your bank information.  You should only be doing this if you have changed banks, bank accounts, have a new location or your banking Information has updated.'} %>
-                            <%= link_to 'Edit Payment Settings', "javascript:void(0)", 'data-target': "#myModal-1", 'data-toggle': "modal" %>
-                            <% else %>
-                            <%= link_to 'Add Payment Details', new_user_stripe_account_path(@user) %>
-                            <% end %> -->
+
 
                         </div>
                     </div>
@@ -137,40 +130,7 @@
 
 </body>
 
-<!-- <% if current_user.stripe_token.present? %> -->
-<!-- <div id="myModal-1" class="modal fade" role="dialog">
-  <div class="modal-dialog">
 
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <h2>Are you sure?</h2>
-        <p>Editing any of your current payment settings will override any
-           previous settings and you will need to re-enter your banking data.
-          You should only be doing this if you have changed banks or bank accounts,
-          have a new location or your banking information has updated on the banks end.</p>
-        <%= link_to "Yes", new_user_stripe_account_path(@user) %>/
-        <%= link_to "No", "javascript:void(0)",'data-dismiss': "modal" %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<script type="text/javascript">
-    $(window).on('onclick',function(){
-        $('#myModal-1').modal('show');
-    });
-
-
-</script> -->
-<!-- <% end %> -->
 
 
 <!--  Google Maps Plugin    -->

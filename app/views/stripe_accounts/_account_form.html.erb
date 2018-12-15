@@ -4,7 +4,7 @@
                                 <div class="card-header ">
                                     <h4 class="card-title">Payment Information</h4>
                                     <p class="card-category">This information is needed for payments.</p>
-                                    <% if current_user.stripe_token.present? %>
+                                    <% if (current_user || current_affiliate).stripe_account.present? %>
                                     <p class="card-category" style="color:green">You already have a connected account for your payouts from Shouts.  Only update your account if your banking information has changed.<p>
                                       <% end%>
                                 </div>
@@ -43,13 +43,13 @@
                                                 <div class="col-md-6">
                                                   <div class="form-group">
                                                     <%= f.label :first_name, "First Name" %>
-                                                    <%= f.text_field :first_name, class: "form-control input-lg", placeholder: current_user.name %>
+                                                    <%= f.text_field :first_name, class: "form-control input-lg", placeholder: (current_user || current_affiliate).name %>
                                                   </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                   <div class="form-group">
                                                     <%= f.label :last_name, "Last Name" %>
-                                                    <%= f.text_field :last_name, class: "form-control input-lg", placeholder: current_user.name %>
+                                                    <%= f.text_field :last_name, class: "form-control input-lg", placeholder: (current_user || current_affiliate).name %>
                                                   </div>
                                                 </div>
                                               </div>
@@ -123,13 +123,19 @@
                                                   </div>
                                                 </div>
                                               </div>
+                                              <% if current_user %>
+                                              <%= hidden_field_tag current_user.id %>
+                                              <% end %>
+                                              <% if current_affiliate %>
+                                              <%= hidden_field_tag current_affiliate.id %>
+                                              <% end %>
+
                                               <div class="field">
-                                                <%= hidden_field_tag current_user.id %>
                                               </div>
                                               <div class="row">
                                                 <div class="col-md-12">
                                                   <div class="form-group">
-                                                    <% if current_user.stripe_token.present? %>
+                                                    <% if (current_user || current_affiliate).stripe_account.present? %>
                                                     <%= f.button "Update Account", class: "btn btn-primary btn-lg btn-block btn-custom", data:  {confirm: "Are you sure?"}, data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating account..."} %>
                                                     <% else %>
                                                     <%= f.button "Create Account", class: "btn btn-primary btn-lg btn-block btn-custom", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating account..."} %>
@@ -183,11 +189,6 @@ var stripe = Stripe('pk_test_WUSowiZS0TqTSqQJucPWU8kh');
   });
 </script>
 
-<!--  Google Maps Plugin    -->
-<!--  Chartist Plugin  -->
-<!--  Notifications Plugin    -->
-
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
 
 <script type="text/javascript">
     $(document).ready(function() {
