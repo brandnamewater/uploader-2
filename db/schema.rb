@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_12_20_031811) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "affiliate_dashboards", force: :cascade do |t|
     t.string "clients"
     t.string "analytics"
