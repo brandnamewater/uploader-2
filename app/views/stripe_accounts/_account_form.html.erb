@@ -5,7 +5,7 @@
                                     <h4 class="card-title">Payment Information</h4>
                                     <p class="card-category">This information is needed for payments.</p>
                                     <% if (current_user || current_affiliate).stripe_account.present? %>
-                                    <p class="card-category" style="color:green">You already have a connected account for your payouts from Shouts.  Only update your account if your banking information has changed.<p>
+                                    <p class="card-category" style="color:green; font-size: 12px;">You already have a connected account for your payouts from Shouts.  Only update your account if your banking information has changed.<p>
                                       <% end%>
                                 </div>
                                 <div class="card-body ">
@@ -116,7 +116,7 @@
                                               <div class="row">
                                                 <div class="col-md-12">
                                                   <div class="form-group">
-                                                    <%= f.check_box :tos %>
+                                                    <%= f.check_box :tos, checked: false %>
                                                     <%= f.label :tos do %>
                                                       I agree to the  <%= link_to "terms of service", 'new' %>.
                                                     <% end %>
@@ -137,6 +137,7 @@
                                                   <div class="form-group">
                                                     <% if (current_user || current_affiliate).stripe_account.present? %>
                                                     <%= f.button "Update Account", class: "btn btn-primary btn-lg btn-block btn-custom", data:  {confirm: "Are you sure?"}, data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating account..."} %>
+                                                    <br><p style="font-size: 11px;">You must update your Bank Account information even if the account and/or routing number are the same.  You will be directed there after clicking "Update"<p>
                                                     <% else %>
                                                     <%= f.button "Create Account", class: "btn btn-primary btn-lg btn-block btn-custom", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating account..."} %>
                                                     <% end %>

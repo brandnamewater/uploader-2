@@ -1,97 +1,175 @@
-<div class="col-md-4">
-    <div class="card ">
-        <div class="card-header ">
-            <h4 class="card-title">Shouts Analytics</h4>
-            <p class="card-category">All client Shouts from today</p>
-        </div>
-        <div class="card-body ">
-          <%= @orders_day.count %>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="card ">
-        <div class="card-header ">
-            <h4 class="card-title">Shouts Analytics</h4>
-            <p class="card-category">All client Shouts this week</p>
-        </div>
-        <div class="card-body ">
-          <%= @orders_week.count %>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="card ">
-        <div class="card-header ">
-            <h4 class="card-title">Shouts Analytics</h4>
-            <p class="card-category">All client Shouts this month</p>
-        </div>
-        <div class="card-body ">
-          <%= @orders_month.count %>
-        </div>
-    </div>
-</div>
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-min-height-50vh">
-            <div class="card-header ">
-                <h4 class="card-title">Your Clients</h4>
-                <p class="card-category">List of your clients</p>
-            </div>
-            <div class="card-body table-full-width table-responsive">
-              <div class="padding_5">
+<div class="card-deck">
+  <div class="col-xl-4">
+      <div class="card ">
+          <div class="card-header ">
+              <!-- <h4 class="card-title">Shouts Counts</h4> -->
+              <p class="card-category">All client Shouts from today</p>
+          </div>
+          <div class="card-body center ">
+            <p>
+              <%= Time.now.strftime("%m/%d/%Y") %>
+            </p>
+            <h3>
+              <% @orders_day.each do |day, orders| %>
+                  <%= orders.count %>
+                  <% break if orders.first %>
+              <% end %>
 
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="center">#</th>
-                      <th class="center">Name</th>
-                      <th class="center">Shouts</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <% @clients.each do |user| %>
+
+            </h3>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl-4">
+      <div class="card ">
+          <div class="card-header ">
+              <!-- <h4 class="card-title">Shouts Analytics</h4> -->
+              <p class="card-category">Revenue This Month</p>
+          </div>
+          <div class="card-body center">
+            <p>
+              <%= Time.now.strftime("%B") %>
+            </p>
+            <h3>
+              <% @orders_month.each do |month , orders| %>
+                $<%= (orders.sum { |order| order.order_price + order.order_price })  %>
+              <% end %>
+            </h3>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl-4">
+      <div class="card ">
+          <div class="card-header ">
+              <!-- <h4 class="card-title">Shouts Analytics</h4> -->
+              <p class="card-category">All client Shouts this month</p>
+          </div>
+          <div class="card-body center">
+            <p>
+              <%= Time.now.strftime("%B") %>
+            </p>
+            <h3>
+              <% @orders_month.each do |month, orders| %>
+                <%= orders.count %>
+              <% end %>
+            </h3>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl-12">
+      <div class="card">
+          <div class="card-min-height-50vh">
+              <div class="card-header ">
+                  <h4 class="card-title">Your Clients</h4>
+                  <p class="card-category">List of your clients</p>
+              </div>
+              <div class="card-body table-full-width table-responsive">
+                <div class="padding_5">
+                  <table class="table">
+                    <thead>
                       <tr>
-                        <td><%= user.id %></td>
-                        <td><%= user.name %></td>
-                        <td><%= user.sales.count %></td>
-
-
+                        <th class="center">#</th>
+                        <th class="center">Name</th>
+                        <th class="center">Shouts</th>
+                        <th class="center">Shouts</th>
 
                       </tr>
-                  </tbody>
-                  <% end %>
-                </table>
+                    </thead>
+                    <tbody>
+                      <% @clients.each do |user, i| %>
+                      <tr>
+                        <td class="center"><%= user.id %></td>
+                        <td class="center" style="font-size:11px;"><%= link_to "#{user.name}", listing_path(user) %></td>
+                        <td class="center"><%= user.sales.where(order_status: [2] ).count %></td>
+                        <td class="center"><%= link_to "View", user_path(user)%></td>
 
-
+                      </tr>
+                    </tbody>
+                    <% end %>
+                  </table>
+                </div>
               </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="card ">
-        <div class="card-header ">
-            <h4 class="card-title">Shouts Analytics</h4>
-            <p class="card-category">Monthly</p>
-        </div>
-        <div class="card-body ">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="center">Month</th>
-                <th class="center">Amount of Shouts</th>
-                <th class="center">Average Response Time</th>
-              </tr>
-            </thead>
-            <% @orders_month.each do |month, orders| %>
-            <tbody>
-              <tr>
-                  <td><%= month.strftime("%B") %></td>
-                  <td class="center"><%= orders.count %></td>
-                  <td class="center"><%= (orders.sum { |order| order.updated_at.day - order.created_at.day } / orders.count )  %> Days</td>
-                <% end %>
-              </tr>
-            </tbody>
-          </table>
           </div>
+        </div>
+            <div class="col-xl-4">
+                <div class="card ">
+                    <div class="card-header ">
+                        <h4 class="card-title">Shouts Analytics</h4>
+                        <p class="card-category">Monthly</p>
+                    </div>
+                    <div class="card-body ">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th class="center">Month</th>
+                            <th class="center">Amount of Shouts</th>
+                            <th class="center">Average Response Time</th>
+                          </tr>
+                        </thead>
+                        <% @orders_month.each do |month, orders| %>
+                        <tbody>
+                          <tr>
+                              <td><%= month.strftime("%b.") %></td>
+                              <td class="center"><%= orders.count %></td>
+                              <td class="center"><%= (orders.sum { |order| order.updated_at.day - order.created_at.day } / orders.count )  %> Days</td>
+                            <% end %>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-8">
+                  <div class="card scroll">
+                      <div class="card-header ">
+                          <h4 class="card-title">Monthly</h4>
+                          <p class="card-category">Monthly Shouts chart</p>
+                      </div>
+                      <div class="card-body ">
+                          <%= line_chart @orders_e.group_by_month(:created_at).count %>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-4 mt-5">
+                  <div class="card ">
+                      <div class="card-header ">
+                          <h4 class="card-title">Shouts Analytics</h4>
+                          <p class="card-category">Daily</p>
+                      </div>
+                      <div class="card-body ">
+                        <table class="table table-hover table-bordered">
+                          <thead>
+                            <tr>
+                              <th class="">Date</th>
+                              <th class="center">Amount of Shouts</th>
+                            </tr>
+                          </thead>
+                          <% @orders_day.each do |day, orders| %>
+                          <tbody>
+                            <tr>
+                                <td><%= day.strftime("%b/%d") %></td>
+                                <td class="center"><%= orders.count %></td>
+                            </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-xl-8 mt-5">
+                  <div class="card">
+                      <div class="card-header ">
+                          <h4 class="card-title">Daily</h4>
+                          <p class="card-category">Daily Shouts chart</p>
+                      </div>
+                      <div class="card-body ">
+                        <%= line_chart @orders_f.group_by_day(:created_at).count %>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>

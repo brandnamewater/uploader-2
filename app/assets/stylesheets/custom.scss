@@ -1,20 +1,49 @@
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    display: inline;
+
 }
 
  td {
-   font-size: 14px;
+   font-size: 11px;
  }
 
  th {
-   font-size: 14px;
+   font-size: 12px;
  }
 
   h2 {
 
  }
 
+ .btn-margin-bottom {
+   margin-bottom: 15px;
+ }
+
+ .table-bordered td, .table-bordered th {
+    border: none !important;
+}
+
+ .card-body p {
+   font-size: 14px !important;
+ }
+
+ .card-title {
+   font-size: 19px;
+ }
+
+ .card-category {
+   font-size: 16px;
+ }
+
+ .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+    padding: 5px;
+}
+
+.card-footer p{
+  font-size: 11px;
+}
  // Bootstrap 4 breakpoints & gutter
 $grid-breakpoints: (
     xs: 0,
@@ -39,9 +68,19 @@ $cards-per-line: (
 	@media (min-width: $breakpoint) {
 		.card-deck .card {
 			flex: 0 0 calc(#{100/map-get($cards-per-line, $name)}% - #{$grid-gutter-width});
-      width: 100%;
+      // width: 100%;
+
 		}
 	}
+  @media only screen and (max-width: $breakpoint) {
+    .card-deck .card {
+      margin-top: 14px;
+    }
+  }
+}
+
+.card-deck .card {
+  margin-top: 14px;
 }
 
  .card-title {
@@ -53,9 +92,9 @@ $cards-per-line: (
   background-size: cover;
 }
 
- .body-listing {
-    padding: 0 100px 0 100px;
-  }
+ // .body-listing {
+ //    padding: 0 100px 0 100px;
+ //  }
 
 .body {
   background-color: #ffffff;
@@ -89,6 +128,23 @@ $cards-per-line: (
   width:100%;
 }
 
+.show-button {
+  margin: 5px;
+  position: absolute;
+  right: 0px;
+
+}
+
+.show-button-2 {
+  margin: 5px;
+  position: absolute;
+  right: 150px;
+
+}
+
+.margin_5_left {
+  margin-right: 5px;
+}
 
 
 .navbar-expand-lg {
@@ -267,6 +323,12 @@ $cards-per-line: (
 //     text-decoration: none;
 // }
 
+@media only screen and (max-width: 1200px) {
+  .column-remove-0 {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .column-remove-1 {
     display: none;
@@ -277,7 +339,19 @@ $cards-per-line: (
   .column-remove-2 {
     display: none;
   }
+
 }
+
+@media only screen and (min-width: 1025px) {
+  .column-remove-3 {
+    display: none;
+  }
+
+}
+
+
+
+
 
  #myBtnSignIn {
    font-size: 14px;
@@ -285,9 +359,26 @@ $cards-per-line: (
 
 
 .padding_5 {
- padding-top: 0%;
- padding-left: 5%;
- padding-right: 5%
+ padding-top: 0% !important;
+ padding-left: 5% !important;
+ padding-right: 5% !important;
+}
+
+.margin_5 {
+ margin-left: 5% !important;
+ margin-right: 5% !important;
+}
+
+#checkbox input {
+  margin: 15px !important;
+}
+
+.upload {
+  border: none;
+}
+
+.btn-upload {
+  margin-top: 10px;
 }
 
 .center {
@@ -316,6 +407,34 @@ $cards-per-line: (
   margin-left: 50%;
   vertical-align: middle;
 }
+
+.center .fa-arrow-circle-o-down {
+  // text-align: center;
+  margin-left: 50%;
+  vertical-align: middle;
+  outline: none;
+  text-decoration: none;
+}
+
+.rotate{
+    -moz-transition: all .4s linear;
+    -webkit-transition: all .4s linear;
+    transition: all .4s linear;
+}
+
+.rotate.down{
+    -moz-transform:rotate(540deg);
+    -webkit-transform:rotate(540deg);
+    transform:rotate(540eg);
+}
+
+
+#edit-accordion {
+  outline: none;
+  text-decoration: none;
+}
+
+
 
 
 
@@ -384,39 +503,58 @@ $cards-per-line: (
 
 
 /* footer */
+//
+// footer {
+//   margin-top: 45px;
+//   padding-top: 5px;
+//   border-top: 1px solid #eaeaea;
+//   color: #777;
+//   padding-left: 75px;
+//   padding-right: 75px;
+//   position: relative;
+//   bottom: 0;
+//   width: 100%;
+// }
+//
+// footer a {
+//   color: #555;
+// }
+//
+// footer a:hover {
+//   color: #222;
+// }
+//
+// footer small {
+//   float: left;
+// }
+//
+// footer ul {
+//   float: right;
+//   list-style: none;
+// }
+//
+// footer ul li {
+//   float: left;
+//   margin-left: 15px;
+// }
 
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
-  padding-left: 75px;
-  padding-right: 75px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+.dashboard-signout {
+  color: white;
+  text-decoration: none;
 }
 
-footer a {
-  color: #555;
+.dashboard-signout:hover {
+  color: white;
+  text-decoration: none;
 }
 
-footer a:hover {
-  color: #222;
+ .footer  {
+   list-style-type: none;
+   list-style: none;
 }
 
-footer small {
-  float: left;
-}
-
-footer ul {
-  float: right;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 15px;
+.index-body {
+  min-height: 10000px;
 }
 
 
@@ -526,6 +664,7 @@ footer ul li {
     min-width: 100%;
     height: 500px;
 }
+
 @media (min-width: 768px) {
     .carousel-caption p {
         margin-bottom: 20px;
@@ -561,13 +700,10 @@ footer ul li {
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip2:hover .tooltiptext {
   visibility: visible;
 }
@@ -587,9 +723,10 @@ footer ul li {
 
 }
 
+
 @media only screen and (max-width: 1024px) {
 
-  .row {
+  .row-index {
     display: inline-grid;
   }
 
@@ -599,17 +736,70 @@ footer ul li {
     white-space: nowrap;
     // -webkit-overflow-scrolling: touch;
     // flex: 0%;
-    padding: 15px 30px;
-    padding-top: 20px;
+    // padding: 15px 30px;
+    // padding-top: 20px;
+    flex: 30%;
+  }
 
 
-    .left h2 {
-      text-align: center;
+    .left-index-display-max {
+      display: none;
     }
 
-  }
+    .left-index-display-min {
+      font-family: 'Pacifico', sans-serif;
+      margin-top: 15px;
+    }
+    // .image-circle {
+    //   width: auto;
+    // }
+
+
 }
 
+@media only screen and (min-width: 1024px) {
+  .left-index-display-min {
+    display: none;
+  }
+ }
+
+ @media only screen and (max-width: 576px) {
+   #listing-image-resize {
+     width:  100px !important;
+     height:  150px !important;
+     top: 50%;
+     left: 50%;
+     transform: translateX(-50%) translateY(-50%);
+     max-width: 100%;
+     max-height: 100%;
+   }
+   #listing-image-resize-2 {
+     position: absolute;
+     width:  100px !important;
+     height:  150px !important;
+     top: 50%;
+     left: 50%;
+     // transform: translateX(-50%) translateY(-50%);
+     max-width: 100%;
+     max-height: 100%;
+   }
+
+   .right  {
+     text-align: center;
+     margin: 0 auto !important;
+     width: 100%;
+     align-items: center;
+   }
+
+   .product- {
+     align-items: center;
+     justify-content: center;
+   }
+
+   // .text-over p {
+   //   font-size: 40px !important;
+   // }
+ }
 
 
  .product- {
@@ -678,29 +868,9 @@ footer ul li {
    // position:relative;
    border-style: solid;
    border-color: rgba(0, 0, 0, .075);
-
-
-
-   // border-color: white;
  }
 
- // .example-form:hover .example-form:focus, .example-form:active {
- //   font-family: Arial, Helvetica, sans-serif;
- //   width: 100%;
- //   font-size: 18px;
- //   padding: 11px;
- //   border-style: solid;
- //   border-color: rgba(255, 0, 0, 1);
- //
- //   // border:1px solid black;
- //   // border-radius:15px;
- //   -moz-border-radius:5px;
- //   -webkit-border-radius:5px;
- //   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
- //   margin: 20px 0 15px 0 ;
- //   position:relative;
- //
- // }
+
 
  .myClickState {
    border-color: red;
@@ -711,11 +881,6 @@ footer ul li {
  }
 
 
- // form.example [type=text] :focus :hover, form.example:focus, form.example:active, form.example.active, .open>.dropdown-toggle.form.example   {
- //   border-color: black !important;
- // }
-//
-//
  /* Style the submit button */
  form.example button {
    // float: left;
@@ -728,8 +893,7 @@ footer ul li {
    background: transparent;
 
    // // border-left: none; /* Prevent double borders */
-   // cursor: pointer;
-   // text-indent: -99999px;
+   cursor: pointer;
    width: 30px;
    height: 30px;
     // display: block;
@@ -742,22 +906,9 @@ footer ul li {
    color: crimson;
  }
 
-//  // form.example button:hover {
-//  //   background: #0b7dda;
-//  // }
-//
-//  /* Clear floats */
-//  form.example::after {
-//    content: "";
-//    clear: both;
-//    display: table;
-//  }
-//
 
 
 
-
-/* Style the search box */
 #mySearch {
   width: 100%;
   font-size: 18px;
@@ -765,7 +916,6 @@ footer ul li {
   border:1px solid #ddd;
 }
 
-/* Style the navigation menu inside the left column */
 #myMenu {
   list-style-type: none;
   padding: 0;
@@ -853,40 +1003,6 @@ footer ul li {
     // -webkit-font-smoothing: antialiased;
 }
 
-// .btn-cat-2:active {
-//   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.4) !important;
-//
-// }
-
- // #btn-cat {
- //    transform: skew(-15deg);
- //    background: linear-gradient(to right,  yellow, red) !important;
- //    border: none;
- //    color: white;
- //    padding: 20px;
- //
- //    display: inline-block;
- //    margin: 4px 2px;
- //    cursor: pointer;
- //    border-radius: 16px !important;
- //    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);
- //  }
- //
- //  #btn-text {
- //    transform: skew(15deg);
- //    background: transparent;
- //    border: none;
- //    color: white !important;
- //    text-decoration: none !important;
- //
- //
- //
- //
- //   }
- //
- //   #btn-text:hover {
- //     text-decoration: none !important;
- //   }
 
 
 
@@ -939,20 +1055,7 @@ footer ul li {
   transform: rotate(-135deg);
   transition: all 0.2s ease-in;
 }
-//
-// #container{
-//     font-size:0;
-//     margin:0 auto;
-//     width:1000px;
-//     text-align: center;
-//     position: relative;
-//
-// }
-//
-// #container-1 {
-//     width: 300px;
-//
-// }
+
 
  .margin-auto {
    margin: 0 auto;
@@ -965,6 +1068,8 @@ p:hover, p:focus, p:active {
 
  .text-over p {
      position: absolute;
+     // font-size: 40px;
+     font-stretch: expanded;
      top: 60%;
      left: 50%;
      transform: translate(-50%, -50%);
@@ -991,7 +1096,7 @@ p:hover, p:focus, p:active {
  //  }
 
   .listing-page-images {
-    display: block;
+    // display: block;
     // margin-top: 0%;
     // margin-left: 5%;
     // margin-right: 5%;
@@ -1056,6 +1161,7 @@ p:hover, p:focus, p:active {
     top: 0;
     transition: top ease 0.3s;
   }
+
 
 
 
@@ -1271,6 +1377,32 @@ p:hover, p:focus, p:active {
   -webkit-font-smoothing: antialiased;
 }
 
+#button-element-2 {
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  text-decoration: none;
+  color: #fff;
+  white-space: nowrap;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 14px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-decoration: none;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+  // float: left;
+  margin-left: 12px;
+  margin-top: 31px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 #button-element {
   border: none;
   border-radius: 4px;
@@ -1451,7 +1583,10 @@ label {
 
   .settings {
     display:inline;
+
   }
+
+
 
   .setting-text {
     margin: 10px !important;
@@ -1477,6 +1612,7 @@ label {
 
   .no-decoration {
     text-decoration: none !important;
+    outline: none;
   }
 
   /* will_paginate */

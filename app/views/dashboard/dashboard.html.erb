@@ -88,7 +88,7 @@
 
 
                    <div class="card-deck">
-                       <div class="col-lg-4">
+                       <div class="col-xl-4">
                            <div class="card ">
                                <div class="card-header ">
                                    <h4 class="card-title">Shouts Analytics</h4>
@@ -106,7 +106,7 @@
                                    <% @orders_month.each do |month, orders| %>
                                    <tbody>
                                      <tr>
-                                         <td><%= month.strftime("%B") %></td>
+                                         <td><%= month.strftime("%b.") %></td>
                                          <td class="center"><%= orders.count %></td>
                                          <td class="center"><%= (orders.sum { |order| order.updated_at.day - order.created_at.day } / orders.count )  %> Days</td>
                                        <% end %>
@@ -117,21 +117,21 @@
                              </div>
                          </div>
 
-                         <div class="col-lg-8">
+                         <div class="col-xl-8">
                              <div class="card scroll">
                                  <div class="card-header ">
                                      <h4 class="card-title">Monthly</h4>
                                      <p class="card-category">Monthly Shouts chart</p>
                                  </div>
                                  <div class="card-body ">
-                                     <%= line_chart @orders_e.group_by_month(:created_at).count %>
+                                     <%= line_chart @orders_h.group_by_month(:created_at).count %>
                                      <%# <%= line_chart @orders_e.group_by_month(:created_at).count, colors: [nil], colors: ['#3ac9d6'],adapter: "highcharts" %> %>
 
                                  </div>
                              </div>
                          </div>
 
-                         <div class="col-lg-4 mt-5">
+                         <div class="col-xl-4 mt-5">
                              <div class="card ">
                                  <div class="card-header ">
                                      <h4 class="card-title">Shouts Analytics</h4>
@@ -157,17 +157,17 @@
                                  </div>
                              </div>
                          </div>
-                         <div class="col-lg-8 mt-5">
+                         <div class="col-xl-8 mt-5">
                              <div class="card">
                                  <div class="card-header ">
                                      <h4 class="card-title">Daily</h4>
                                      <p class="card-category">Daily Shouts chart</p>
                                  </div>
                                  <div class="card-body ">
-                                   <%= line_chart @orders_f.group_by_day(:created_at).count %>
+                                   <%= line_chart @orders_h.group_by_day(:created_at).count %>
                                  </div>
                              </div>
                          </div>
 
                      </div>
-                     </div>
+                   </div>

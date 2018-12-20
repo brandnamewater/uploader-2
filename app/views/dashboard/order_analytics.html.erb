@@ -1,65 +1,53 @@
 
-  <div class="row">
-      <div class="col-lg-6">
-          <div class="card ">
-              <div class="card-header ">
-                  <h4 class="card-title">Referring Site Analytics</h4>
-                      <p class="card-category"></p>
-                          <table class="table">
-                              <thead>
-                                  <tr>
-                                      <th class="center">Referring Site</th>
-                                      <th class="center">Count</th>
-                                  </tr>
-                              </thead>
-                              <% @orders_referring.each do |referring_domain, count| %>
-                              <tbody>
-                                  <tr>
-                                    <td class="center"><%= referring_domain %></td>
-                                    <td class="center"><%= count %></td>
-                                  </tr>
-                            <% end %>
-                              </tbody>
-                          </table>
-                  </div>
-            </div>
+  <div class="card-deck">
+      <div class="col-xl-6">
+        <div class="center">
+          <h3>Referring Site Analytics</h3>
+        </div>
+          <div class="card border-info">
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th class="center">Referring Site</th>
+                          <th class="center">Count</th>
+                      </tr>
+                  </thead>
+                  <% @orders_referring.each do |referring_domain, count| %>
+                  <tbody>
+                      <tr>
+                        <td class="center table-bordered"><%= referring_domain %></td>
+                        <td class="center"><%= count %></td>
+                      </tr>
+                <% end %>
+                  </tbody>
+              </table>
+          </div>
       </div>
-      <div class="col-lg-6">
+
+      <div class="col-xl-6">
           <div class="card ">
               <div class="card-header ">
                   <h4 class="card-title">Location Analytics</h4>
-                      <p class="card-category"></p>
-                          <table class="table">
-                              <thead>
-                                  <tr>
-                                      <th class="center">Country</th>
-                                      <th class="center">Count</th>
-                                  </tr>
-                              </thead>
-                              <% @orders_country.each do |country, count| %>
-                              <tbody>
-                                  <tr>
-                                    <td class="center"><%= country %></td>
-                                    <td class="center"><%= count %></td>
-                                  </tr>
-                            <% end %>
-                              </tbody>
-                          </table>
-                  </div>
-            </div>
+                  <p class="card-category"></p>
+              </div>
+              <div class="card-body">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th class="center">Country</th>
+                              <th class="center">Count</th>
+                          </tr>
+                      </thead>
+                      <% @orders_country.each do |country, count| %>
+                      <tbody>
+                          <tr>
+                            <td class="center"><%= country %></td>
+                            <td class="center"><%= count %></td>
+                          </tr>
+                    <% end %>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
       </div>
  </div>
-
-
-
-  </div>
-
-
-
-</body>
-
-<script>
-
-</script>
-
-</html>

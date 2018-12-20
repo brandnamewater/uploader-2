@@ -1,65 +1,76 @@
-<%= form_with(model: listing, local: true) do |form| %>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <% if listing.errors.any? %>
-    <div id="error_explanation" class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria hidden="true">&times;</button>
+  <%= form_with(model: listing, local: true) do |form| %>
+
+    <% if listing.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria hidden="true">&times;</button>
 
 
-      <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+        <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
 
-      <ul>
-      <% listing.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% listing.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
     </div>
-  <% end %>
 
-          <div class="field">
-            <%= form.label :name %>
-            <%= form.text_field :name, class: "form-control" %>
+    <div class="field">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: "form-control"  %>
+    </div>
+
+    <div class="field">
+      <%= form.label :price %>
+      <%= form.text_field :price, class: "form-control"  %>
+    </div>
+
+
+
+    <%= form.label "How Do Fans Know You Best?"%>
+
+
+      <a class="collapsed card-link text-center" id="edit-accordion" data-toggle="collapse" href="#collapseFIRST">
+        <div class="card-header">
+            <p class="card-title text-dark">Categories</p>
+          <div class="center">
+              <h6 class="card-subtitle mb-2 text-muted card-category"><i class="fa fa-arrow-circle-o-down rotate fa-2x" aria-hidden="true"></i></h6>
           </div>
-
-          <div class="field">
-            <%= form.label :description %>
-            <%= form.text_area :description, class: "form-control"  %>
+        </div>
+      </a>
+      <div id="collapseFIRST" class="collapse" data-parent="#accordion">
+          <div class="card-body">
+            <div class="center">
+              <p>Choose up to 4</p>
+            </div>
+            <!-- <div class="margin_5"> -->
+              <div id="checkbox">
+                <%= form.collection_check_boxes(:category_ids, Category.all, :id, :name, :multiple => true) %>
+              </div>
+            <!-- </div> -->
           </div>
+      </div>
 
-          <div class="field">
-            <%= form.label :price %>
-            <%= form.text_field :price, class: "form-control"  %>
-          </div>
-
-
-
-<%= form.label "How Do Fans Know You Best?"%>
-
-  <div class="space">
-    <!-- <%= form.select :category_ids, options_from_collection_for_select(Category.all, :id, :name), :prompt => "Select a Category", :multiple => true %>
-    <%= form.select :category_ids, options_from_collection_for_select(Category.all, :id, :name), :prompt => "Select a Category", :multiple => true %>
-    <%= form.select :category_ids, options_from_collection_for_select(Category.all, :id, :name), :prompt => "Select a Category", :multiple => true %> -->
-
-
-
-      <div id="accordion" class="panel-group">
-        <div class="panel">
-          <div class="panel-heading">
-          <h4 class="panel-title">
-            <a href="#panelBodyOne" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">Categories</a>
-          </h4>
-   </div>
-   <div id="panelBodyOne" class="panel-collapse collapse in">
-   <div class="panel-body">
-  <div id="checkbox">
-    <%= form.collection_check_boxes(:category_ids, Category.all, :id, :name, :multiple => true) %>
+      <div class="field">
+        <%= form.label :image, "Replace Listing Image" %>
+        <%= form.file_field :image, class: "upload"  %>
+      </div>
+      <div class="actions">
+        <%= form.submit "Upload", class: "btn btn-success"  %>
+      </div>
+    <% end %>
   </div>
-</div>
-    </div>
-  </div>
 
-    </div>
-
-  <script>
+<script>
 
   $('#checkbox input:checkbox').change(function () {
   var $cs=$('#checkbox input:checkbox:checked');
@@ -69,23 +80,16 @@
   else{
     $('#checkbox input:checkbox').attr("disabled", false);
   }
-});
+  });
 
 $('#accordion').each(function(){
-    if ($(this).hasClass('in')) {
-        $(this).collapse('toggle');
-    }
+  if ($(this).hasClass('in')) {
+      $(this).collapse('toggle');
+  }
 });
 
+$(".rotate").click(function(){
+$(this).toggleClass("down")  ;
+})
+
 </script>
-
-          <div class="field">
-            <%= form.label :image, "Replace Listing Image" %>
-            <%= form.file_field :image %>
-          </div>
-
-          <div class="actions">
-            <%= form.submit %>
-          </div>
-<% end %>
-</div>

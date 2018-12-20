@@ -4,13 +4,21 @@
                             <div class="card">
 
                                 <div class="card-header ">
-                                    <h4 class="card-title">Your yoyo</h4>
-                                    <p class="card-category">Here's your yoyo!</p>
+                                    <h4 class="card-title">Edit Shout</h4>
+                                    <p class="card-category"></p>
                                 </div>
 
                                 <div class="card-body ">
                                   <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-xl-12">
+                                      <div class="row">
+                                        <div class="image-circle-show">
+                                          <div class="listing-show-images">
+                                            <%= image_tag @listing.image_url(:thumb) %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="center">
                                       <% if @listing.listing_status["live"] %>
                                       <%= form_for @listing, remote: true do |f| %>
                                       <%= f.hidden_field :listing_status, value: "hold" %>
@@ -19,30 +27,17 @@
                                       <% elsif @listing.listing_status["hold"] %>
                                       <%= form_for @listing, remote: true do |f| %>
                                       <%= f.hidden_field :listing_status, value: "live" %>
-                                      <%= f.submit "Put Listing Live", data: {confirm: "Are you sure you want to put your listing live? You will be able to accept Shout requests!" }, class: "btn"  %>
+                                      <%= f.submit "Put Listing Live", data: {confirm: "Are you sure you want to put your listing live? You will be able to accept Shout requests!" }, class: "btn btn-primary"  %>
                                       <% end %>
                                       <% end %>
-
-                                      <div class="center">
-                                        <h1>Editing Listing</h1>
                                       </div>
                                         <%= render 'form', listing: @listing %>
                                     </div>
 
-                                    <div class="col-md-6">
-                                      <div class="center">
-                                      <%= image_tag @listing.image_url(:thumb) %>
-                                      </div>
-                                    </div>
+
                                   </div>
                                 </div>
-                                <div class="card-footer ">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Upload
-                                        <i class="fa fa-circle text-danger"></i> Upload Complete
-                                    </div>
-                                    <hr>
-                                </div>
+
                             </div>
 
                         </div>

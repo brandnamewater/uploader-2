@@ -1,136 +1,156 @@
 
-                    <div class="row">
-                      <% if current_user.seller? || current_user.seller? && current_user.buyer? %>
+                    <div class="card-deck">
+                      <% if current_user.seller?  %>
                       <% if current_user.id == @order.seller_id %>
-                      <div class="col-md-6">
+                      <div class="col-md-8 mx-auto">
                           <div class="card">
                             <div class="card-min-height-50vh">
 
                               <div class="card-header ">
-                                  <h4 class="card-title">Order Intel</h4>
-                                  <p class="card-category"></p>
+                                  <div class="card-title">Request Intel</div>
+                                  <div class="card-category">
+                                    <%= @order.id %>
+                                  </div>
                               </div>
-                              <div class="card-body table-full-width table-responsive">
+                              <div class="card-body">
                                 <div class="padding_5">
 
-                                <p id="notice"><%= notice %></p>
 
-                                <p>
-                                  <strong>Name</strong>(Who it's for)<strong>:</strong>
+
+
+                                  <table class="table table-left">
+                                      <tr>
+                                        <th scope="row" class="text-xl-left"><strong>Name</strong>(Who it's for)<strong>:</strong></th>
+                                        <td><%= @order.name %></td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" class="text-xl-left"><strong>Description:</strong></th>
+                                        <td><%= @order.description %></td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row" class="text-xl-left">
+                                          <strong>Status:</strong></th>
+                                        <td>
+                                          <% if @order.video.present? || @order.order_status["charged"] %>
+                                          <p class=text-xl-left" style="color:green;">Complete</p>
+                                          <p class="text-xl-left">
+                                            <% elsif @order.order_status["cancelled"] %>
+                                            Cancelled
+                                            <% elsif @order.order_status["created"] %>
+                                            Waiting for Talent
+                                            <% end %>
+                                          </p>
+                                        </td>
+
+                                      </tr>
+                                  </table>
+
+
+
+
+                              <!-- <div class="center"> -->
+                                <!-- <p>
+                                  <strong>Name</strong>(Who it's for)<strong>:</strong><br>
                                   <%= @order.name %>
                                 </p>
-
                                 <p>
-                                  <strong>Description:</strong>
+                                  <strong>Description:</strong><br>
                                   <%= @order.description %>
                                 </p>
-
                                 <p>
                                   <strong>Status:</strong>
+                                </p>
                                   <% if @order.video.present? || @order.order_status["charged"] %>
-                                  Completed
-
+                                    <p style="color:green;">Complete</p>
+                                  <p>
                                   <% elsif @order.order_status["cancelled"] %>
                                   Cancelled
-
                                   <% elsif @order.order_status["created"] %>
-                                  Waiting for Talent
+                                  Waiting for Upload
                                   <% end %>
                                 </p>
-
-
+                                <p>
+                                  <strong>Created:</strong><br>
+                                  <%= @order.created_at %>
+                                </p> -->
                                 <% if @order.video.present? || @order.order_status["charged"] %>
                                 <p>Already Uploaded!</p>
-
                                 <% elsif @order.order_status["cancelled"] %>
                                 <p>Order cancelled</p>
-
                                 <% elsif @order.order_status["created"] %>
-                                <p>Don't want this Shout Request? Cancel it:</p>
+
+
+
+
+
+                                <!-- <p>Don't want this Shout Request? Cancel it:</p> -->
                                   <%= form_for @order, remote: true do |f| %>
                                   <%= f.hidden_field :order_status, value: "cancelled" %>
-
-                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal", class: "btn btn-danger" %>
-
+                                  <div class="float-right">
+                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal", class: "btn btn-danger " %>
+                                  <div class="" style="font-size:10px;">You can cancel the Shout request if you don't like it</div>
+                                  <!-- </div> -->
                                   <% end %>
                                   <% end %>
-
-
+                                  <!-- </div> -->
+                                </div>
                               </div>
                             </div>
                             <hr>
                             <% if @order.order_status["created"] %>
-                            <div class="card-body table-full-width table-responsive">
+                            <div class="card-body">
                               <div class="padding_5">
 
                                 <%= form_for([@order, @video_order]) do |form| %>
-                                <%= form.file_field :video %>
+                                <%= form.file_field :video, class: "upload" %>
                               <div class="actions">
-                                <%= form.submit "Upload", class: "btn btn-success"  %>
+                                <%= form.submit "Upload", class: "btn btn-success btn-block btn-upload"  %>
                               </div>
-
                               </div>
                             </div>
                             <% end %>
                             <% end %>
-
                             <% if @order.order_status["charged"] %>
-                            <div class="card-body table-full-width table-responsive">
+                            <div class="card-body">
                               <div class="padding_5">
                                 <p>Upload the wrong video? Update the video</p>
                                 <%= form_for(@order.video_order)  do |form| %>
-                                <%= form.file_field :video %>
+                                <%= form.file_field :video, class: "upload" %>
                               <div class="actions">
-                                <%= form.submit "Upload", class: "btn btn-success"  %>
+                                <%= form.submit "Upload", class: "btn btn-primary btn-block btn-upload"  %>
                               </div>
-
-
                               </div>
                             </div>
                             <% end %>
                             <% end %>
-
-
-
-
-
                               </div>
                           </div>
                       </div>
                       <% end %>
-
-
-                        <div class="col-md-6">
-                            <div class="card">
-                              <div class="card-min-height-50vh">
-
-                                <div class="card-header ">
-                                    <h4 class="card-title">Talent information</h4>
-                                    <p class="card-category"></p>
-                                </div>
-                                <div class="card-body table-full-width table-responsive">
-                                  <div class="padding_5">
-
-
-                                    <%= image_tag @order.listing.image_url(:thumb) %>
-
-
-                                    <p>
-                                      <strong>Talent:</strong>
-                                    <%= @order.listing.name %>
-                                  </p>
-
-
-
-
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
                       <% end %>
 
                       <% if current_user.buyer? %>
+                      <div class="col-md-12">
+
+
+
+                              <div class="card-body ">
+                                <div class="row">
+                                  <div class="col-xl-12">
+                                    <div class="row">
+                                      <div class="image-circle-show">
+                                        <div class="listing-show-images">
+                                          <%= image_tag @order.listing.image_url(:thumb) %>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                        </div>
+
+
                       <div class="col-md-8 mx-auto">
                           <div class="card">
                             <div class="card-min-height-50vh">
@@ -141,20 +161,22 @@
                               </div>
                               <div class="card-body table-full-width table-responsive">
                                 <div class="padding_5">
-
+                                  <div class="row">
+                                    <div class="image-circle-show">
+                                      <div class="listing-show-images">
+                                        <%= image_tag @order.listing.image_url(:thumb) %>
+                                      </div>
+                                    </div>
+                                  </div>
                                 <p id="notice"><%= notice %></p>
-
                                 <p>
                                   <strong>Name</strong>(Who it's for)<strong>:</strong>
                                   <%= @order.name %>
                                 </p>
-
                                 <p>
                                   <strong>Description:</strong>
                                   <%= @order.description %>
                                 </p>
-
-
                                 <p>
                                   <strong>Status:</strong>
                                   <% if @order.video.present? || @order.order_status["charged"] %>
@@ -170,24 +192,20 @@
                                   <% end %>
                                 </p>
 
-
                                 <% if @order.order_status["created"] %>
-                                <%= link_to "Edit Order", edit_order_path(@order), class: "btn btn-primary" %>
+                                  <%= link_to "Edit Order", edit_order_path(@order), class: "btn btn-light float-right" %>
                                   <%= form_for @order, remote: true do |f| %>
                                   <%= f.hidden_field :order_status, value: "cancelled" %>
-
-                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal", class: "btn btn-danger" %>
-
-                                  <% end %>
-                                  <% end %>
-
+                                  <%= link_to 'Cancel Shouts Request', "javascript:void(0)", 'data-target': "#myModal-3", 'data-toggle': "modal", class: "btn btn-light float-right margin_5_left" %>
+                                <% end %>
+                                <% end %>
 
                               </div>
                             </div>
-                              </div>
                           </div>
+                        </div>
                       </div>
-                      <% end %>
+                              <% end %>
 
 
 

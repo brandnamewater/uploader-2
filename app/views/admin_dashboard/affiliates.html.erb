@@ -1,0 +1,39 @@
+
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-min-height-50vh">
+            <div class="card-header ">
+                <h4 class="card-title">Affilaites</h4>
+                <p class="card-category">All Affiliates</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+              <div class="padding_5">
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="center">#</th>
+                      <th class="center">Name</th>
+                      <th class="center">Email</th>
+                      <th class="center">seller</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% @affiliates.each do |affiliate| %>
+                      <tr>
+                        <td class="center"><%= affiliate.id %></td>
+                        <td class="center"><%= affiliate.name %></td>
+                        <td class="center"><%= affiliate.email %></td>
+                        <td class="center"><%= affiliate.users.ids %></td>
+                    </tr>
+                  </tbody>
+                  <% end %>
+                </table>
+
+
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

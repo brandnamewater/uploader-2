@@ -4,17 +4,63 @@ class AffiliateDashboardsController < ApplicationController
 
   def clients
     @clients = User.all.where(affiliate_id: current_affiliate)
+
+    @client_orders = @clients
     # @orders = Order.all.find(params[:seller_id])
+    # @clients_orders =.@clients.orders.where(order_status: [2] ).group_by_day(:created_at, last: 7).count
 
-    @orders_e = Order.all.where(seller: current_affiliate.users ).where(order_status: [2] ).paginate(:page => params[:month_orders_page_1], :per_page => 12)
+    # @orders_clients = @clients.where(sales: )
+
+    @orders_e = Order.all.where(seller: @clients ).where(order_status: [2] ).paginate(:page => params[:month_orders_page_1], :per_page => 12)
+    @orders_h = Order.all.where(seller: @clients ).where(order_status: [2] ).order('created_at DESC')
+
+    @orders_week_00 = @orders_h.group_by_day(:created_at, last: 1, series: false).count
+
     @orders_f = Order.all.where(seller: current_affiliate.users ).where(order_status: [2] ).paginate(:page => params[:day_orders_page_1], :per_page => 7)
-    @orders_g = Order.all.where(seller: current_affiliate.users ).where(order_status: [2] ).paginate(:page => params[:week_orders_page_1], :per_page => 14)
+    @orders_i = Order.all.where(seller: current_affiliate.users ).where(order_status: [2] )
 
-    @orders_month = @orders_e.all.group_by { |mon|  mon.created_at.beginning_of_month }
-    @orders_day = @orders_f.all.group_by { |day|  day.created_at.beginning_of_day }
-    @orders_week = @orders_g.all.group_by { |week|  week.created_at.beginning_of_week }
+    @orders_g = Order.all.where(seller: current_affiliate.users ).where(order_status: [2] ).paginate(:page => params[:week_orders_page_1], :per_page => 14)
+    @orders_j = Order.all.where(seller: current_affiliate.users ).where(order_status: [2] )
+
+
+    @orders_month = @orders_h.group_by { |mon|  mon.created_at.beginning_of_month }
+    @orders_day = @orders_h.all.group_by { |day|  day.created_at.beginning_of_day }
+    @orders_week = @orders_j.all.group_by { |week|  week.created_at.beginning_of_week }
+
+    @orders_week_1 = @orders_j.all.group_by { |week|  week.created_at.beginning_of_week }.count
+
+
+    # @orders_month_pag = @orders_month.order('created_at DESC').paginate(:page => params[:month_orders_page_1], :per_page => 12)
+    @orders_day_pag = @orders_i.all.group_by { |day|  day.created_at.beginning_of_day }
+    @orders_week_pag = @orders_j.all.group_by { |week|  week.created_at.beginning_of_week }
+
+
+    @orders_day_2 = @orders_h.all.group_by_day(:created_at, last: 1, series: false)
+    @orders_week_2 = @orders_h.all.group_by_day(:created_at, last: 7)
+    @orders_month_2 = @orders_h.all.group_by_month(:created_at, series: false)
+    @orders_month_3 = @orders_h.all.group_by_day(:created_at, last: 30, series: false)
+
+    @orders_week_count = @orders_week_2.count
+
+
 
   end
+
+  def client_page
+    @client = User.find(params[:id])
+
+
+
+
+  end
+
+  def flash_class_name(name)
+    case name
+    when 'notice' then 'success'
+    when 'alert'  then 'danger'
+    else name
+    end
+end
 
   def settings
     @user = current_affiliate
@@ -91,18 +137,6 @@ class AffiliateDashboardsController < ApplicationController
 
   end
 
-  # GET /affiliate_dashboards
-  # GET /affiliate_dashboards.json
-  def index
-    @affiliate_dashboards = AffiliateDashboard.all
-  end
-
-  # GET /affiliate_dashboards/1
-  # GET /affiliate_dashboards/1.json
-  def show
-  end
-
-  # GET /affiliate_dashboards/new
   def new
     @affiliate_dashboard = AffiliateDashboard.new
   end

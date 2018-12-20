@@ -1,6 +1,5 @@
 
    <div class="card-deck">
-
       <div class="col-xl-6">
           <div class="card ">
               <div class="card-header ">
@@ -12,7 +11,8 @@
                   <tr>
                     <th class="center">Order Number</th>
                     <th class="center">Talent Name</th>
-                    <!-- <td class="center">Price</td> -->
+                    <th class="center">Price</th>
+
                     <th class="center column-remove-1">Date Requested</th>
                     <th class="center">Update</th>
                   </tr>
@@ -22,20 +22,13 @@
                     <tr>
                       <td class="center"><%= order.id %></td>
                       <td class="center"><%= order.seller.name %></td>
-                      <!-- <td class="center"><%= number_to_currency(order.order_price) %></td> -->
+                      <td class="center"><%= number_to_currency(order.order_price) %></td>
                       <td class="center column-remove-1"><%= order.created_at.strftime("%B %-d, %Y") %></td>
 
                       <td class="center">
-                        <!-- <div class="btn-group">
-                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Action
-                          </button>
-                          <ul class="dropdown-menu" role="menu"> -->
                             <%= link_to edit_order_path(order), class: "btn btn-link" do %>
                             <i class="fa fa-indent" aria-hidden="true"></i>
                             <% end %>
-                          <!-- </ul> -->
-                        <!-- </div> -->
                       </td>
                     </tr>
                     <% end %>
@@ -57,10 +50,9 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="center d-block">Order Number</th>
+                      <th class="center">Order Number</th>
                       <th class="center">Talent Name</th>
-                      <th class="center d-none d-lg-block">Price</th>
-                      <th class="center column-remove-1">Date Scheduled</th>
+                      <!-- <th class="center column-remove-1">Date Scheduled</th> -->
                       <th class="center">Download Your file!</th>
                       <th class="center">View</th>
 
@@ -69,11 +61,10 @@
                   <% @orders_charged.each do |order| %>
                     <tbody>
                       <tr>
-                      <td class="center d-block"><%= order.id %></td>
+                      <td class="center"><%= order.id %></td>
                       <td class="center"><%= order.seller.name %></td>
-                      <td class="center d-none d-lg-block"><%= number_to_currency(order.order_price) %></td>
-                      <td class="center column-remove-1"><%= order.created_at.strftime("%b. %-d, %Y") %></td>
-                      <td class="center"><%= link_to "Download it", order.video_order.video.url %></td>
+                      <!-- <td class="center column-remove-1"><%= order.created_at.strftime("%b. %-d, %Y") %></td> -->
+                      <td class="center"><%= link_to "Download", order.video_order.video.url %></td>
                       <td class="center"><%= link_to 'View', order_path(order) %></td>
                     </tr>
                     <% end %>

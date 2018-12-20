@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_08_084240) do
+ActiveRecord::Schema.define(version: 2018_12_20_031811) do
 
   create_table "affiliate_dashboards", force: :cascade do |t|
     t.string "clients"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2018_12_08_084240) do
     t.datetime "updated_at", null: false
     t.decimal "commission", default: "0.05", null: false
     t.string "name"
+    t.boolean "approved", default: false, null: false
+    t.index ["approved"], name: "index_affiliates_on_approved"
     t.index ["email"], name: "index_affiliates_on_email", unique: true
     t.index ["reset_password_token"], name: "index_affiliates_on_reset_password_token", unique: true
   end

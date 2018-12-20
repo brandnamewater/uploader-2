@@ -7,7 +7,14 @@ class Affiliate < ApplicationRecord
 
   has_one :stripe_account
   has_many :users
+  
+  def active_for_authentication?
+    super && approved
+  end
 
+  def inactive_message
+    approved? ? super : :not_approved
+  end
 
 
 end

@@ -84,8 +84,8 @@ class DashboardController < ApplicationController
   end
 
   def order_analytics
-    @orders_referring = Order.joins(:visit).group("referring_domain").count
-    @orders_country = Order.joins(:visit).group("city").count
+    @orders_referring = Order.where(seller: current_user).joins(:visit).group("referring_domain").count
+    @orders_country = Order.where(seller: current_user).joins(:visit).group("city").count
     # @listing_visits = Ahoy::Event.where(name: "Listing Viewed").where_properties(listing_id: current_user).count
 
   end
@@ -101,8 +101,12 @@ class DashboardController < ApplicationController
     @orders_e = Order.all.where(seller: current_user).where(order_status: [2] ).paginate(:page => params[:month_orders_page_1], :per_page => 12)
     @orders_f = Order.all.where(seller: current_user).where(order_status: [2] ).paginate(:page => params[:day_orders_page_1], :per_page => 7)
 
-    @orders_month = @orders_e.all.group_by { |mon|  mon.created_at.beginning_of_month }
-    @orders_day = @orders_b.all.group_by { |day|  day.created_at.beginning_of_day }
+    @orders_g = Order.all.where(seller: current_user).where(order_status: [2] )
+    @orders_h = Order.all.where(seller: current_user).where(order_status: [2] )
+
+
+    @orders_month = @orders_g.all.group_by { |mon|  mon.created_at.beginning_of_month }
+    @orders_day = @orders_h.all.group_by { |day|  day.created_at.beginning_of_day }
 
 
     @order = Order.new

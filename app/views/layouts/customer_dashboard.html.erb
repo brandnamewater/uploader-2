@@ -5,7 +5,7 @@
 
       <% flash.each do |name, msg| %>
         <% if msg.is_a?(String) %>
-          <div class="alert alert-<%= name == :notice ? "success" : "danger" %> alert-dismissable">
+          <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %> alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <%= content_tag :div, msg, :id => "flash_#{name}" %>
           </div>
@@ -48,13 +48,20 @@
 
 
 
-        <nav class="navbar navbar-expand navbar-dark bg-primary fixed-top"> <a href="#menu-toggle" id="menu-toggle" class="navbar-brand"><span class="navbar-toggler-icon"></span></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <nav class="navbar navbar-expand navbar-dark fixed-top nav-color"> <a href="#menu-toggle" id="menu-toggle" class="navbar-brand"><span class="navbar-toggler-icon"></span></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbarsExample02">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"> <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a> </li>
-                    </ul>
-                    <ul class="navbar-nav navbar-right">
-                    <li class="nav-item navbar-right"> <a class="nav-link" href="#">Link</a> </li>
+                <div class="navbar-header navbar-center">
+                    <a class="navbar-brand center" id="navbar-center" href="/">Dashboard</a>
+                </div>
+                <ul class="navbar-nav mr-auto ">
+                    <!-- <li class="nav-item active"> <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a> </li> -->
+                </ul>
+                <ul class="navbar-nav navbar-right dashboard-signout">
+
+                <% if user_signed_in? || affiliate_signed_in? %>
+                  <li class="nav-remove-1"><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dashboard-signout" %>
+                  </li>
+                <% end %>
                 </ul>
                 <form class="form-inline my-2 my-md-0"> </form>
             </div>
@@ -73,9 +80,9 @@
                   </li>
 
                     <li>
-                        <a class="nav-link" href="/c/purchases">
+                        <a class="nav-link" href="/c/shouts">
                             <i class="nc-icon nc-paper-2"></i>
-                            <p>Purchases</p>
+                            <p>Shouts</p>
                         </a>
                     </li>
                     <li>
@@ -84,6 +91,21 @@
                             <p>User</p>
                         </a>
                     </li>
+                    <!-- <li>
+                        <a class="nav-link" href="/users/edit">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <p>Sign Out</p>
+                        </a>
+                    </li> -->
+                    <% if user_signed_in? || affiliate_signed_in? %>
+                      <li class="side-show-1">
+                        <%= link_to destroy_user_session_path, method: :delete, class:"nav-link" do %>
+
+                          <p>Sign Out</p>
+
+                      <% end %>
+                      </li>
+                    <% end %>
 
                 </ul>
         </div>
@@ -94,21 +116,21 @@
         <div id="page-content-wrapper">
 
                 <div class="container-fluid">
+                  <div class="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                  </div>
 
                   <%= yield %>
 
+                </div>
         </div>
-  </div>
+
   </div>
 
  <% end %>
-<!-- </body> -->
 
-<!-- <div id="page-content-wrapper">
-  <div class="container-fluid">
-    <%= render "layouts/footer" %>
-  </div>
-</div> -->
 
 <script>
 
@@ -120,12 +142,28 @@
            });
 
            $(window).resize(function(e) {
-             if($(window).width()<=768){
+             if($(window).width()<=992){
                $("#wrapper").removeClass("toggled");
              }else{
                $("#wrapper").addClass("toggled");
              }
            });
+         });
+
+         $( document ).ready(function() {
+
+          // hide spinner
+          $(".spinner").hide();
+
+
+
+         $(document).on("page:fetch", function(){
+           $(".spinner").show();
+         });
+
+         $(document).on("page:receive", function(){
+           $(".spinner").hide();
+         });
          });
 
 

@@ -7,10 +7,13 @@ Rails.application.routes.draw do
 
   authenticated :affiliate do
     get 'a/clients' => 'affiliate_dashboards#clients'
+
   end
 
+get 'client/:id', to: "affiliate_dashboard#client_page"
+
   authenticated :user, ->(user) { user.buyer? } do
-    get 'c/purchases' => 'customer_dashboard#purchases'
+    get 'c/shouts' => 'customer_dashboard#purchases'
     get 'c/dashboard' => 'customer_dashboard#buyer_dashboard'
   end
 
@@ -28,6 +31,7 @@ Rails.application.routes.draw do
     get 'admin/users' => 'admin_dashboard#users'
     get 'admin/sellers' => 'admin_dashboard#sellers'
     get 'admin/buyers' => 'admin_dashboard#buyers'
+    get 'admin/affiliates' => 'admin_dashboard#affiliates'
     get 'admin/orders' => 'admin_dashboard#orders'
     get 'admin/listings' => 'admin_dashboard#listings'
     get 'admin/analytics' => 'admin_dashboard#website_analytics'
@@ -56,7 +60,7 @@ Rails.application.routes.draw do
 
   resources :listings do
     resources :orders
-end
+  end
 
     resources :orders
 

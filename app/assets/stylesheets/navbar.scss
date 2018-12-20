@@ -1231,7 +1231,7 @@ body {
   height: 100%;
   margin-left: -250px;
   overflow-y: auto;
-  background: rgba(128, 0, 128, .79) ;
+  background: rgba(255, 0, 0, .79) ;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -1253,6 +1253,30 @@ body {
   margin-left: 0px;
 }
 
+// .navbar .navbar-expand .navbar-dark .navbar-header .navbar-brand .navbar-center  {
+//         display: block;
+//         text-align:center;
+//         float: none;
+//         vertical-align: top;
+// }
+
+
+#navbar-center  {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: white;
+    text-align: center;
+
+
+    }
+
+
+.nav-color {
+  background: rgba(1, 0, 0, .79) ;
+}
 
 /* Sidebar Styles */
 
@@ -1301,7 +1325,7 @@ body {
   background: none;
 }
 
-@media(min-width:768px) {
+@media(min-width:992px) {
   #wrapper {
     padding-left: 0;
   }
@@ -1321,5 +1345,17 @@ body {
   #wrapper.toggled #page-content-wrapper {
     position: relative;
     margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 830px) {
+  .nav-remove-1 {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 830px) {
+  .side-show-1 {
+    display: none;
   }
 }

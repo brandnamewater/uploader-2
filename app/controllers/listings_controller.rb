@@ -93,7 +93,7 @@ class ListingsController < ApplicationController
     @orders = Order.all.where(seller: current_user).paginate(:page => params[:page], :per_page => 15) || @orders = Order.all.where(seller: current_buyer).paginate(:page => params[:page], :per_page => 15)
 
 
-    @orders_a = Order.all.where(seller: current_user) || @orders = Order.all.where(seller: current_buyer)
+    @orders_a = Order.all.where(seller: current_user)
     @orders_month = @orders_a.all.group_by { |mon|  mon.created_at.beginning_of_month }
     @orders_day = @orders_a.all.group_by { |day|  day.created_at.beginning_of_day }
     @orders_date = @orders_a.all.group_by { |day|  day.created_at.beginning_of_day }

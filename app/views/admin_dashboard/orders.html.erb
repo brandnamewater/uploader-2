@@ -1,4 +1,5 @@
-<div class="col-md-4">
+<div class="card-deck">
+<div class="col-xl-4">
     <div class="card">
         <div class="card-min-height-50vh">
             <div class="card-header ">
@@ -13,7 +14,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-4">
+<div class="col-xl-4">
     <div class="card">
         <div class="card-min-height-50vh">
             <div class="card-header ">
@@ -28,7 +29,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-4">
+<div class="col-xl-4">
     <div class="card">
         <div class="card-min-height-50vh">
             <div class="card-header ">
@@ -43,7 +44,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-12">
+<div class="col-xl-12">
     <div class="card">
         <div class="card-min-height-50vh">
             <div class="card-header ">
@@ -51,16 +52,13 @@
                 <p class="card-category"></p>
             </div>
             <div class="card-body table-full-width table-responsive">
-              <div class="padding_5">
 
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="center">#</th>
-                      <th class="center">Name</th>
-                      <th class="center">Price</th>
-
-
+                      <th>#</th>
+                      <th class="">Name</th>
+                      <th class="">Price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -69,7 +67,6 @@
                         <td><%= order.id %></td>
                         <td><%= order.email %></td>
                         <td><%= order.order_price %></td>
-
                     </tr>
                   </tbody>
                   <% end %>
@@ -77,9 +74,8 @@
                 <div class="digg_pagination">
                 <%= will_paginate @orders, :param_name => 'admin_orders_page' %>
                 </div>
-
-              </div>
             </div>
         </div>
     </div>
+</div>
 </div>

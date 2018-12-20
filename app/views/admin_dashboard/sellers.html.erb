@@ -1,5 +1,5 @@
 
-<div class="col-md-12">
+<div class="col-xl-12">
     <div class="card">
         <div class="card-min-height-50vh">
             <div class="card-header ">
@@ -17,16 +17,17 @@
                       <th class="center">Approval Status</th>
                       <th class="center">Seller</th>
                       <th class="center">Admin</th>
+                      <th class="center">Affiliate</th>
 
                     </tr>
                   </thead>
                   <tbody>
                       <% @users.each do |user| %>
                       <tr>
-                        <td><%= user.id %></td>
-                        <td><%= user.email %></td>
-                        <td><%= user.approved %></td>
-                        <td>
+                        <td class="center"><%= user.id %></td>
+                        <td class="center"><%= user.email %></td>
+                        <td class="center"><%= user.approved %></td>
+                        <td class="center">
                           <% if user.approved == true %>
                             <p>Approved</p>
                             <% else %>
@@ -35,9 +36,9 @@
                               <%= f.submit "Approve User", data: {confirm: "Are you sure?"}, class: "form-control" %>
                             <% end %>
                           <% end %>
-                      </td>
-                        <td>
-                          <% if user.seller == true %>
+                        </td>
+                        <td class="center">
+                          <% if user.seller? %>
                             <p>Approved</p>
                             <% else %>
                               <%= form_for user, remote: true do |f| %>
@@ -45,7 +46,17 @@
                               <%= f.submit "Approve User", data: {confirm: "Are you sure?"}, class: "form-control" %>
                             <% end %>
                           <% end %>
-                      </td>
+                        </td>
+                        <td class="center">
+                          <% if user.seller? && user.affiliate_id.present? %>
+                            <p>Approved <%= user.affiliate_id %>: <%= user.affiliate.name %></p>
+                            <% else %>
+                              <%= form_for user, remote: true do |f| %>
+                              <%= f.text_field :affiliate_id, class: "form-control"  %>
+                              <%= f.submit "Add Affiliate", data: {confirm: "Are you sure?"}, class: "btn btn-light" %>
+                            <% end %>
+                          <% end %>
+                        </td>
                     </tr>
                   </tbody>
                   <% end %>

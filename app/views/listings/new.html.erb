@@ -1,52 +1,21 @@
-
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card scroll">
-
-                                <div class="card-header ">
-                                    <h4 class="card-title">Your yoyo</h4>
-                                    <p class="card-category">Here's your yoyo!</p>
-                                </div>
-                                <div class="card-body ">
-                                  <div data-spy="scroll" data-offset="0">
-
-                                    <div class="padding_5">
-                                      <div class="center">
-                                        <h1>New Listing</h1>
-                                      </div>
-
-                                        <%= render 'form', listing: @listing %>
-
-                                        <%= link_to 'Back', listings_path %>
-                                    </div>
-                                  </div>
-                                  </div>
-                                <div class="card-footer ">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Upload
-                                        <i class="fa fa-circle text-danger"></i> Upload Complete
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card scroll">
+            <div class="card-header ">
+              <h4 class="card-title">Your Shouts Listing</h4>
+              <p class="card-category"></p>
+            </div>
+            <div class="card-body ">
+              <div data-spy="scroll" data-offset="0">
+                <div class="padding_5">
+                    <%= render 'form', listing: @listing %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-</body>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-        demo.showNotification();
-
-    });
-</script>
-
-</html>
+  </div>

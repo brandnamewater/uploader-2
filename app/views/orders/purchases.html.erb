@@ -1,12 +1,13 @@
 
-                  <div class="row">
-                      <div class="col-md-6">
+                  <div class="card-deck">
+                      <div class="col-xl-6">
                           <div class="card ">
 
                               <div class="card-header ">
                                   <h4 class="card-title">Your Shouts Requests</h4>
                                   <p class="card-category">A list of all of your current requests</p>
                               </div>
+                              <div class="card-body">
                                   <table class="table">
                                     <thead>
                                       <tr>
@@ -26,16 +27,9 @@
                                           <td class="center column-remove-1"><%= order.created_at.strftime("%B %-d, %Y") %></td>
 
                                           <td class="center">
-                                            <!-- <div class="btn-group">
-                                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                Action
-                                              </button>
-                                              <ul class="dropdown-menu" role="menu"> -->
                                                 <%= link_to edit_order_path(order), class: "btn btn-link" do %>
                                                 <i class="fa fa-indent" aria-hidden="true"></i>
                                                 <% end %>
-                                              <!-- </ul> -->
-                                            <!-- </div> -->
                                           </td>
                                         </tr>
                                         <% end %>
@@ -44,12 +38,13 @@
                                     <div class="digg_pagination">
                                       <%= will_paginate @orders_pending, :param_name => 'orders_pending_page_1', :page_links => false %>
                                     </div>
+                                  </div>
 
 
             </div>
         </div>
 
-    <div class="col-md-6">
+    <div class="col-xl-6">
         <div class="card ">
 
             <div class="card-header ">
@@ -57,6 +52,7 @@
                 <p class="card-category">A list of all of your completed shouts ready for download!</p>
             </div>
             <div class="card-body">
+              <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
@@ -76,12 +72,13 @@
                       <td class="center"><%= order.seller.name %></td>
                       <td class="center"><%= number_to_currency(order.order_price) %></td>
                       <td class="center column-remove-1"><%= order.created_at.strftime("%b. %-d, %Y") %></td>
-                      <td class="center"><%= link_to "Download it", order.video_order.video.url %></td>
-                      <td class="center"><%= link_to 'View', order_path(order) %></td>
+                      <td class="center"><%= link_to "Download", order.video_order.video.url, style: 'font-size:12px;' %></td>
+                      <td class="center"><%= link_to 'View', order_path(order), style: 'font-size:12px;' %></td>
                     </tr>
                     <% end %>
                   </tbody>
                 </table>
+                </div>
                 <div class="digg_pagination">
                   <%= will_paginate @orders_charged, :param_name => 'orders_charged_page_1', :page_links => false %>
                 </div>

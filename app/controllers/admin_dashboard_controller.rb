@@ -22,6 +22,12 @@ class AdminDashboardController < ApplicationController
 
   end
 
+  def affiliates
+    @affiliates = Affiliate.all
+    @users = User.all
+
+  end
+
   def orders
     @orders = Order.all.order('created_at DESC').paginate(:page => params[:admin_orders_page], :per_page => 30)
     @orders_count_all = Order.all.count
@@ -46,7 +52,7 @@ class AdminDashboardController < ApplicationController
   def create_seller
     @user = User.new
   end
-  
+
   def update
     @user = User.find(params[:id])
 

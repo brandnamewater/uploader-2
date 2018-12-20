@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 layout "admin_dashboard", :only => [ :edit, :update, :new, :add_user ]
-before_action :authenticate_user!
+before_action :authenticate_user!, :only => [ :edit, :update, :new, :add_user ]
+layout "affiliate_dashboard", :only => [ :show ]
+before_action :make_sure_admin, :only => [:add_user]
 
   def index
       if params[:approved] == "false"
@@ -31,6 +33,20 @@ before_action :authenticate_user!
   end
 
   def show
+
+    @user = User.find(params[:id])
+
+    if current_affiliate == @user.affiliate
+      @user = User.find(params[:id])
+    else
+      redirect_to '/', alert: "You don't have permission to access this page.  If this is a mistake, please contact the administrators."
+    end
+
+    @orders_h = Order.all.where(seller: @user ).where(order_status: [2] ).order('created_at DESC')
+
+    @orders_month = @orders_h.group_by { |mon|  mon.created_at.beginning_of_month }
+    @orders_day = @orders_h.all.group_by { |day|  day.created_at.beginning_of_day }
+    # @orders_week = @orders_j.all.group_by { |week|  week.created_at.beginning_of_week }
 
   end
 
@@ -64,6 +80,12 @@ end
 
      def user_seller_params
        params.require(:user).permit(:seller)
+     end
+
+     def make_sure_admin
+       unless @user.admin?
+         redirect_to '/'
+       end
      end
 
 end

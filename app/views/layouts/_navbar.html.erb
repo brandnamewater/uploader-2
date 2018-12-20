@@ -2,14 +2,18 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
 
-    <ul class="nav navbar-nav navbar-right">
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav navbar-right">
       <% if user_signed_in? && current_user.seller? %>
         <li id="nav-item-b"><%= link_to "Dashboard", '/dashboard' %>
       </li>
       <% elsif user_signed_in? && current_user.buyer? %>
-      <li id="nav-item-b"><%= link_to "Dashboard", '/purchases' %>
+      <li id="nav-item-b"><%= link_to "Dashboard", '/c/shouts' %>
       </li>
       <% elsif current_affiliate %>
       <li id="nav-item-b"><%= link_to "Dashboard", '/a/clients' %>
@@ -80,6 +84,11 @@
           $("#SignInModal").modal();
       });
   });
+
+  $('.nav a').on('click', function(){
+      $('#collapsibleNavbar').click(); //bootstrap 4.x
+  });
+
   </script>
 
         </li>
@@ -106,5 +115,6 @@
 
 
     </ul>
+    </div>
     </div>
 </nav>

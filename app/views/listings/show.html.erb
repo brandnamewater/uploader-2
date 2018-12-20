@@ -26,39 +26,39 @@
                 <div class="progress-bar"></div>
             </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="left" title="Your purchase is put on hold and you&apos;re not charged until the ORDER is complete."></a>
             <div
-            class="bs-wizard-info text-center">Request Your !</div> <a class="bs-wizard-dot-2" data-toggle="tooltip" data-placement="top"
+            class="bs-wizard-info text-center">Request!</div> <a class="bs-wizard-dot-2" data-toggle="tooltip" data-placement="top"
             title="During this time you can edit or cancel your Order."></a>
             </div>
-      <div class="col-4 bs-wizard-step complete">
-        <div class="text-center bs-wizard-stepnum">Step 2</div>
-        <div class="progress">
-            <div class="progress-bar"></div>
-        </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="top" title="Once uploaded, you can then Get Your Order!"></a>
-        <div class="bs-wizard-info text-center">Talent uploads!</div>
-        </div>
-      <div class="col-4 bs-wizard-step complete">
-        <div class="text-center bs-wizard-stepnum">Step 3</div>
-        <div class="progress">
-            <div class="progress-bar"></div>
-        </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="right"
-        title="Get Your yoyo from either your dashboard, by email, or by text."></a>
-        <div
-        class="bs-wizard-info text-center">GET YOUR PRODUCT!</div>
+        <div class="col-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-stepnum">Step 2</div>
+          <div class="progress">
+              <div class="progress-bar"></div>
+          </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="top" title="Once uploaded, you can then Get Your Order!"></a>
+          <div class="bs-wizard-info text-center">Talent uploads!</div>
+          </div>
+        <div class="col-4 bs-wizard-step complete">
+          <div class="text-center bs-wizard-stepnum">Step 3</div>
+          <div class="progress">
+              <div class="progress-bar"></div>
+          </div> <a class="bs-wizard-dot" data-toggle="tooltip" data-placement="right"
+          title="Get Your yoyo from either your dashboard, by email, or by text."></a>
+          <div
+          class="bs-wizard-info text-center">GET YOUR SHOUT!</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 <div class="body-listing">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet' /> -->
 
 
 
-      <div class="row">
+
+      <div class="card-deck">
         <div class="margin-auto">
         <div class="col-md-12">
               <div class="card">
@@ -121,6 +121,10 @@
 
                     </script>
 
+                    <% if @listing.listing_status["hold"] %>
+                      <a href="/" class="btn btn-info ripple-effect" role="button" id="button-element-2">This Shout is on hold, view all Talent</a>
+                    <% else %>
+
                       <div class="form-row">
                         <label for="card-element">
                           Credit or debit card
@@ -141,6 +145,7 @@
 
                     <span class="token"></span>
                     <!-- </form> -->
+                    <% end %>
                     <% end %>
 
                     </div>

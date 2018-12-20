@@ -1,5 +1,5 @@
 
-                  <div class="row">
+                  <div class="card-deck">
                     <div class="col-lg-4">
                         <div class="card border-success ">
                             <div class="card-header ">
@@ -20,7 +20,7 @@
                           <div class="card border-primary ">
                               <div class="card-header ">
                                   <h4 class="card-title">Account Balance</h4>
-                                  <p class="card-category">Your account balance pending settlement</p>
+                                  <p class="card-category">Your pending account settlement total</p>
                               </div>
                               <div class="card-body text-primary ">
                                 <% @balance.pending.each do |balance| %>
@@ -33,7 +33,7 @@
                           <div class="card ">
                               <div class="card-header ">
                                 <% @payout_1.each do |payout| %>
-                                  <h4 class="card-title">Payouts</h4>
+                                  <h4 class="card-title">Most Recent Payout</h4>
                                   <p class="card-category">Deposited on <%= as_table_row_payout(Time.at(payout["arrival_date"]).strftime('%B, %d, %Y')) %></p>
                               </div>
                               <div class="card-body ">
@@ -78,8 +78,8 @@
                     <div class="col-lg-6 mt-5">
                         <div class="card ">
                             <div class="card-header ">
-                                <h4 class="card-title">Payouts</h4>
-                                <p class="card-category">Your past payouts</p>
+                                <h4 class="card-title">Recent Payouts</h4>
+                                <p class="card-category"></p>
                             </div>
                             <div class="card-body ">
                               <table class="table table-bordered table-striped table-hover">
