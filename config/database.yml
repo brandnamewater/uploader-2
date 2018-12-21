@@ -50,8 +50,10 @@ test:
     password:
 
 production:
-  <<: *default
-  encoding: unicode
-  database: demo_test_development
-  username: bob
-  password:
+  adapter: <YOUR DATABASE ENGINE>
+  encoding: utf8
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
