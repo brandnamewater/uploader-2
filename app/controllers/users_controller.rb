@@ -75,7 +75,7 @@ end
 
 
      def user_params
-       params.require(:user).permit(:name, :approved, :seller, :buyer, :admin, :stripe_account, :email, :password, :password_confirmation)
+       params.require(:user).permit(:name, :approved, :seller, :buyer, :admin, :stripe_account, :email, :password, :password_confirmation, :role, :affiliate_id)
      end
 
      def user_seller_params

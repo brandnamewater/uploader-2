@@ -42,7 +42,7 @@
                             <p>Approved</p>
                             <% else %>
                               <%= form_for user, remote: true do |f| %>
-                              <%= f.hidden_field :seller, value: true %>
+                              <%= f.input_field :role, as: :hidden, value: "seller" %>
                               <%= f.submit "Approve User", data: {confirm: "Are you sure?"}, class: "form-control" %>
                             <% end %>
                           <% end %>

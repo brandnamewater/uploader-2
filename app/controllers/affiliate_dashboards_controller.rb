@@ -193,6 +193,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def affiliate_dashboard_params
-      params.require(:affiliate_dashboard).permit(:clients, :analytics, :orders)
+      params.require(:affiliate_dashboard).permit(:clients, :analytics, :orders, :approved)
     end
 end

@@ -15,7 +15,8 @@
                       <th class="center">#</th>
                       <th class="center">Name</th>
                       <th class="center">Email</th>
-                      <th class="center">seller</th>
+                      <th class="center">Approval Status</th>
+                      <th class="center">Seller(s)</th>
 
                     </tr>
                   </thead>
@@ -25,6 +26,16 @@
                         <td class="center"><%= affiliate.id %></td>
                         <td class="center"><%= affiliate.name %></td>
                         <td class="center"><%= affiliate.email %></td>
+                        <td class="center">
+                          <% if affiliate.approved == true %>
+                            <p>Approved</p>
+                            <% else %>
+                              <%= form_for affiliate, remote: true do |f| %>
+                              <%= f.hidden_field :approved, value: true %>
+                              <%= f.submit "Approve", data: {confirm: "Are you sure?"}, class: "form-control" %>
+                            <% end %>
+                          <% end %>
+                        </td>
                         <td class="center"><%= affiliate.users.ids %></td>
                     </tr>
                   </tbody>
