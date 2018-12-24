@@ -69,8 +69,8 @@ class BankAccountsController < ApplicationController
       #
       # @bank_account.stripe_account_id = @stripe_account
 
-      @bank_account = BankAccount.new(bank_account_params)
-      @bank_account.save!
+      # @bank_account = BankAccount.new(bank_account_params)
+      # @bank_account.save!
 
     # Handle exceptions from Stripe
     rescue Stripe::StripeError => e

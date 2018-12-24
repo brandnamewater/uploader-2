@@ -62,14 +62,15 @@
                                   </form>
                               </div>
                               <div class="card-footer ">
+
                                   <div class="stats">
                                       <i class="fa fa-info"></i> This information is never saved in our database.
                                   </div>
                               </div>
 
+                              </div>
                             </div>
                           </div>
-                        </div>
 
 
 
@@ -91,7 +92,7 @@
     successElement.classList.add('visible');
 
     // In a real integration, you'd submit the form with the token to your backend server
-    var form = document.querySelector('form');
+    var form = document.getElementById('payment-form-1');
     form.querySelector('input[name="token"]').setAttribute('value', result.token.id);
     form.submit();
 
@@ -101,7 +102,7 @@
   }
 }
 
-document.querySelector('#payment-form-1').addEventListener('submit', function(e) {
+document.getElementById('payment-form-1').addEventListener('submit', function(e) {
   e.preventDefault();
 
   var bankAccountParams = {
@@ -117,5 +118,6 @@ document.querySelector('#payment-form-1').addEventListener('submit', function(e)
 
   stripe.createToken('bank_account', bankAccountParams).then(setOutcome);
 });
+
 
 </script>
