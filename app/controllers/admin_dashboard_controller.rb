@@ -28,6 +28,12 @@ class AdminDashboardController < ApplicationController
 
   end
 
+  def affiliate
+    @affiliates = Affiliate.all
+    @users = User.all
+
+  end
+
   def orders
     @orders = Order.all.order('created_at DESC').paginate(:page => params[:admin_orders_page], :per_page => 30)
     @orders_count_all = Order.all.count
@@ -55,15 +61,25 @@ class AdminDashboardController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-
+    respond_to do |format|
     if @user.update(user_params) # <- you'll need to define these somewhere as well
-      respond_to do |format|
         format.html { redirect_to '/admin_dashboard/User', notice: "yaho5o" }
         format.json { render json: @user }
     else
         format.html { render :edit }
         format.json { render json: { errors: @user.errors }, status: :unprocessable_entity }
     end
+
+    @affiliate = Affiliate.find(params[:id])
+
+    if @affiliate.update(affiliate_dashboard_params) # <- you'll need to define these somewhere as well
+        format.html { redirect_to '/admin_dashboard/Affiliate', notice: "yaho5o" }
+        format.json { render json: @affiliate }
+    else
+        format.html { render :edit }
+        format.json { render json: { errors: @affiliate.errors }, status: :unprocessable_entity }
+    end
+
   end
 
 end
@@ -74,6 +90,10 @@ end
 
     def user_params
       params.require(:user).permit(:name, :approved, :seller, :buyer, :admin, stripe_account: [:stripe_account])
+    end
+
+    def affiliate_dashboard_params
+      params.require(:affiliate_dashboard).permit(:clients, :analytics, :orders, :approved)
     end
 
 

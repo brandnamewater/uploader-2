@@ -62,15 +62,14 @@
                                   </form>
                               </div>
                               <div class="card-footer ">
-
                                   <div class="stats">
                                       <i class="fa fa-info"></i> This information is never saved in our database.
                                   </div>
                               </div>
 
-                              </div>
                             </div>
                           </div>
+                        </div>
 
 
 
@@ -102,7 +101,7 @@
   }
 }
 
-document.querySelector('form').addEventListener('submit', function(e) {
+document.querySelector('#payment-form-1').addEventListener('submit', function(e) {
   e.preventDefault();
 
   var bankAccountParams = {
@@ -119,12 +118,4 @@ document.querySelector('form').addEventListener('submit', function(e) {
   stripe.createToken('bank_account', bankAccountParams).then(setOutcome);
 });
 
-
-</script>
-
-<script type="text/javascript">
-        var baseOptions = {
-          maintainAspectRatio: false,
-          animation: false
-          };
 </script>

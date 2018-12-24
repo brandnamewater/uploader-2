@@ -53,8 +53,9 @@ before_action :make_sure_admin, :only => [:add_user]
 
   def update
    @user = User.find(params[:id])
+   respond_to do |format|
    if @user.update(user_params) # <- you'll need to define these somewhere as well
-     respond_to do |format|
+
        format.html { redirect_to '/admin/users', notice: "yahoo" }
        format.json { render json: @user }
    else

@@ -42,7 +42,7 @@
                                     </div>
                                     <% end %>
 
-                                    <% elsif current_affiliate.stripe_account==false %>
+                                    <% elsif (current_user || current_affiliate).stripe_account.present? ==false %>
                                     <%= link_to new_stripe_account_path, class: "no-decoration" do %>
                                     <div class="col-lg-4 settings">
                                       <div class="setting-awesome-font">

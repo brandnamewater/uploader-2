@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :affiliate_dashboards
   devise_for :affiliates
+  resources :affiliates
   resources :video_orders
 
 
